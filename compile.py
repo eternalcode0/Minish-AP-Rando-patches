@@ -27,46 +27,50 @@ def check_rom_file() -> bool:
 
     return ROM_SHA == sha1.hexdigest()
 
-def compile_asm(path: str) -> bool:
-    for file in glob.glob(path, recursive=True):
-        fileBase = os.path.splitext(file)[0]
-        fileElf = f"{fileBase}.elf"
-        fileSym = f"{fileBase}.symbols.log"
-        fileDmp = f"{fileBase}.dmp"
-        try:
-            subprocess.call([
-                "arm-none-eabi-as",
-                "-g",
-                "-mcpu=arm7tdmi",
-                "-mthumb-interwork",
-                file,
-                "-o",
-                fileElf,
-            ])
+def compile_asm(paths: [str]) -> bool:
+    if len(paths) == 0:
+        print("No input list of asm files, compiling **/*.s")
+        paths = ["**/*.s"]
+    for path in paths:
+        for file in glob.glob(path, recursive=True):
+            fileBase = os.path.splitext(file)[0]
+            fileElf = f"{fileBase}.elf"
+            fileSym = f"{fileBase}.symbols.log"
+            fileDmp = f"{fileBase}.dmp"
+            try:
+                subprocess.call([
+                    "arm-none-eabi-as",
+                    "-g",
+                    "-mcpu=arm7tdmi",
+                    "-mthumb-interwork",
+                    file,
+                    "-o",
+                    fileElf,
+                ])
 
-            f = open(fileSym, "w")
-            subprocess.call([
-                "arm-none-eabi-readelf",
-                "-s",
-                fileElf,
-            ], stdout=f)
+                f = open(fileSym, "w")
+                subprocess.call([
+                    "arm-none-eabi-readelf",
+                    "-s",
+                    fileElf,
+                ], stdout=f)
 
-            subprocess.call([
-                "arm-none-eabi-objcopy",
-                "-S",
-                fileElf,
-                "-O",
-                "binary",
-                fileDmp,
-            ])
+                subprocess.call([
+                    "arm-none-eabi-objcopy",
+                    "-S",
+                    fileElf,
+                    "-O",
+                    "binary",
+                    fileDmp,
+                ])
 
-            Path.unlink(fileElf)
-            Path.unlink(fileSym)
-        except:
-            print("Error while compiling asm: %s" % file)
-            return False
-        else:
-            print(f"Successfully compiled asm: {file}")
+                Path.unlink(fileElf)
+                Path.unlink(fileSym)
+            except:
+                print("Error while compiling asm: %s" % file)
+                return False
+            else:
+                print(f"Successfully compiled asm: {file}")
     return True
 
 def compile_rom() -> bool:
@@ -104,7 +108,7 @@ def compile_diff() -> bool:
             "basepatch.bsdiff",
         ])
     except:
-        print("Diff calculation failed, how did that happen?")
+        print("Diff calculation failed, is bsdiff installed?")
         return False
     return True
 
@@ -117,7 +121,7 @@ def main():
     parser.add_argument("-d", "--diff", action="store_true",
                         help="Whether to compute the bsdiff between the built rom and original")
 
-    parser.add_argument("-a", "--asm", type=str, nargs="?", const="**/*.s",
+    parser.add_argument("-a", "--asm", type=str, nargs="*", default=None,
                         help="A list of asm files to compile into dmp files.")
 
     args = parser.parse_args()
