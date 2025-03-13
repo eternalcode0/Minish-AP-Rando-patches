@@ -1,1 +1,20 @@
-//dummy
+// --------------------------------
+// Options intended to always be on
+// --------------------------------
+
+#define glitchless
+
+// -----------------------------
+// Hard-coded options for v0.1.0
+// -----------------------------
+
+#define openFusions                         // Set every fusion as already done, should only be used with noFusions
+#define noFusions                           // Remove red, blue, and green kinstones. With openFusions makes fusion checks accessible from the beginning, without makes fusion checks inaccessible
+
+// #define requirementFigurinesAmmount 136  // 0-136
+// #define requirementSwordTier 5           // Don't require a sword to open DHC, don't define if 0, only 1-5
+#define requirementElementsAmmount 4        // Require 1-4 elements to open DHC
+
+// #define openDHC                          // DHC is open from the start, can be used with pedestalItems
+// #define pedestalItems                    // Randomize the pedestal locations? Not sure if this does anything else yet
+// #define noDHC                            // Pulling from pedestal jumps to credits. Cannot be used with openDHC
