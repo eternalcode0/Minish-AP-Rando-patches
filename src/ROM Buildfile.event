@@ -196,11 +196,10 @@ WORD customRNG
 #include "randomLanguage.event"
 
 // add ap item handler
-PUSH; ORG $5185A; SHORT 0; jumpToHack(apItem); POP
+PUSH; ORG $AD158; jumpToHack(apItem); POP
 ALIGN 4
 apItem:
 #incbin "asm/apItem.dmp"
-SHORT 0;
 
 #ifdef fuzzy //size of the mosaic, 0 to 14
     PUSH; ORG $4FD90; jumpToHack(fuzzyMode); POP
