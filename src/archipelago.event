@@ -1,0 +1,37 @@
+// add ap item handler
+PUSH; ORG $AD158; jumpToHack(apItem); POP
+ALIGN 4
+apItem:
+#incbin "asm/apItem.dmp"
+POIN itemHandlerTable
+POIN ($AD158+0x08)|1 //return offset
+
+ALIGN 4
+itemHandlerTable:
+POIN idsGiveItem
+
+idsGiveItem:
+BYTE 0x1C // Bottle 1
+BYTE 0x1D // Bottle 2
+BYTE 0x1E // Bottle 3
+BYTE 0x1F // Bottle 4
+BYTE 0x36 // Dog Food
+BYTE 0x50 // Dungeon Map
+BYTE 0x51 // Dungeon Compass
+BYTE 0x52 // Dungeon Big Key
+BYTE 0x53 // Dungeon Small Key
+BYTE 0x54 // 1 Rupee
+BYTE 0x55 // 5 Rupees
+BYTE 0x56 // 20 Rupees
+BYTE 0x57 // 50 Rupees
+BYTE 0x58 // 100 Rupees
+BYTE 0x59 // 200 Rupees
+BYTE 0x5D // 5 Bombs
+BYTE 0x5E // 5 Arrows
+BYTE 0x5F // Recovery Heart
+BYTE 0x64 // Big Wallet
+BYTE 0x6C // 10 Bombs
+BYTE 0x6D // 30 Bombs
+BYTE 0x6E // 10 Arrows
+BYTE 0x6F // 30 Arrows
+BYTE 0xFF // Terminator

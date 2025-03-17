@@ -1,22 +1,60 @@
+.equ returnOffset, tableGiveItem+4
 .thumb
 push {r0-r3}
-ldr r2, =#0x3003FA8     @ Read item id
-ldrb r0, [r2]           @ Read primary item id into r0 for sending to GiveItem func
-ldrb r1, [r2, #0x1]     @ Read sub item id into r1 for sending to GiveItem func
-mov r3, #0x0
-strh r3, [r2]           @ Clear ram address for next cycle
+ldr r3, =#0x3003FA8     @ Register for the ap item
+ldrb r0, [r3]           @ Read primary item id into r0, will control which table we use
+ldrb r1, [r3, #0x1]     @ Sub id, unused so far.
+mov r2, #0x0
 cmp r0, #0x0            @ If there is not an item to give...
-beq ap_end              @ Skip to the end
-ldr r3, =#0x08F13C5C    @ Return point after GiveItem
+beq ap_end              @ Then skip to the end
+mov r4, r0              @ Else, setup table data for GiveItem
+ldr r5,tableGiveItem
+ldr r0, [r5]
+
+tableLoop:              @ Loop through the GiveItem table :8F13C56
+ldrb r1,[r0]
+cmp r1, r4              @ Check if the item id is in the table, meaning it can be `GiveItem`d
+beq tableMatch
+cmp r1, #0xFF           @ If we've reached the end of the table
+beq noMatch
+add r0, #1              @ Else increment table index and repeat
+b tableLoop
+
+tableMatch:             @ The item in r4 can be `GiveItem`d
+mov r0, r4
+ldrb r1, [r3, #0x1]
+ldr r3, =#0x8F13C72     @ Return point after GiveItem
 mov lr, r3
-ldr r2,=#0x8053B89      @ Else: call GiveItem with the 2 item ids
-bx r2
+ldr r4,=#0x8053B89      @ Call GiveItem with the 2 item ids
+bx r4
+b clear
+
+noMatch:                @ The item needs to be passed to CreateItemEntity
+ldr r3, =#0x3003FA8
+mov r0, r4
+ldrb r1, [r3, #0x1]
+mov r2, #0x0
+ldr r3, =#0x8F13C84     @ Jump to clear label after CreateItemEntity
+mov lr, r3
+ldr r4, =#0x80A73F9     @ Call CreateItemEntity
+bx r4
+
+clear:
+ldr r3, =#0x3003FA8     @ Reload the memory address to be cleared for the next cycle
+mov r4, #0x0
+strh r4, [r3]
 
 ap_end:                 @ Call the original instructions starting at 0x80AD158
 pop { r0-r3 }
 ldr r0, =#0x30010A0
 add r0, #0x2f
-ldrb r0, [r0,#0x0]      @ I don't know why but this was in the original overwritten instructions so it stays, ig
+ldrb r0, [r0,#0x0]
 mov r1, #0x0
 ldr r3, =#0x80AD161
 bx r3
+
+.align
+.ltorg
+tableGiveItem:
+@POIN tableGiveItem
+@POIN returnOffset      @ Unused, to be deleted

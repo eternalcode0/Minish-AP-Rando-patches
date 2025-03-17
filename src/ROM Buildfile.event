@@ -194,12 +194,7 @@ WORD customRNG
 #include "save/installer.event"
 #include "hearts.event"
 #include "randomLanguage.event"
-
-// add ap item handler
-PUSH; ORG $AD158; jumpToHack(apItem); POP
-ALIGN 4
-apItem:
-#incbin "asm/apItem.dmp"
+#include "archipelago.event"
 
 #ifdef fuzzy //size of the mosaic, 0 to 14
     PUSH; ORG $4FD90; jumpToHack(fuzzyMode); POP
