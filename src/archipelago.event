@@ -1,10 +1,9 @@
 // add ap item handler
-PUSH; ORG $AD158; jumpToHack(apItem); POP
+PUSH; ORG $701D4; jumpToHack(apItem); POP
 ALIGN 4
 apItem:
 #incbin "asm/apItem.dmp"
 POIN itemHandlerTable
-POIN ($AD158+0x08)|1 //return offset
 
 ALIGN 4
 itemHandlerTable:

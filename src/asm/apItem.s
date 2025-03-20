@@ -1,6 +1,9 @@
-.equ returnOffset, tableGiveItem+4
 .thumb
-push {r0-r3}
+push {r0-r7}
+ldr r3, =#0x3001004     @ Task Substate
+ldrb r0, [r3]
+cmp r0, #0x2
+bne ap_end
 ldr r3, =#0x3003FA8     @ Register for the ap item
 ldrb r0, [r3]           @ Read primary item id into r0, will control which table we use
 ldrb r1, [r3, #0x1]     @ Sub id, unused so far.
@@ -23,7 +26,7 @@ b tableLoop
 tableMatch:             @ The item in r4 can be `GiveItem`d
 mov r0, r4
 ldrb r1, [r3, #0x1]
-ldr r3, =#0x8F13C72     @ Return point after GiveItem
+ldr r3, =#0x8F13C7A     @ Return point after GiveItem
 mov lr, r3
 ldr r4,=#0x8053B89      @ Call GiveItem with the 2 item ids
 bx r4
@@ -34,7 +37,7 @@ ldr r3, =#0x3003FA8
 mov r0, r4
 ldrb r1, [r3, #0x1]
 mov r2, #0x0
-ldr r3, =#0x8F13C84     @ Jump to clear label after CreateItemEntity
+ldr r3, =#0x8F13C8C     @ Jump to clear label after CreateItemEntity
 mov lr, r3
 ldr r4, =#0x80A73F9     @ Call CreateItemEntity
 bx r4
@@ -45,16 +48,14 @@ mov r4, #0x0
 strh r4, [r3]
 
 ap_end:                 @ Call the original instructions starting at 0x80AD158
-pop { r0-r3 }
-ldr r0, =#0x30010A0
-add r0, #0x2f
-ldrb r0, [r0,#0x0]
-mov r1, #0x0
-ldr r3, =#0x80AD161
-bx r3
+pop { r0-r7 }
+ldr r6, =#0x3003F80
+add r3, r6, #0x0
+add r3, #0xA8
+mov r4, #0x0
+ldr r7, =#0x80701DD
+bx r7
 
 .align
 .ltorg
 tableGiveItem:
-@POIN tableGiveItem
-@POIN returnOffset      @ Unused, to be deleted
