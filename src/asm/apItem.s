@@ -1,10 +1,12 @@
+.equ	receivingItem, tableGiveItem+4
+.equ    returnPoint, clear
 .thumb
 push {r0-r7}
 ldr r3, =#0x3001004     @ Task Substate
 ldrb r0, [r3]
 cmp r0, #0x2
 bne ap_end
-ldr r3, =#0x3003FA8     @ Register for the ap item
+ldr r3, receivingItem   @ Register for the ap item
 ldrb r0, [r3]           @ Read primary item id into r0, will control which table we use
 ldrb r1, [r3, #0x1]     @ Sub id, unused so far.
 mov r2, #0x0
@@ -26,24 +28,23 @@ b tableLoop
 tableMatch:             @ The item in r4 can be `GiveItem`d
 mov r0, r4
 ldrb r1, [r3, #0x1]
-ldr r3, =#0x8F13C7A     @ Return point after GiveItem
+ldr r3, =#0x8053B89     @ Call GiveItem
 mov lr, r3
-ldr r4,=#0x8053B89      @ Call GiveItem with the 2 item ids
-bx r4
+.short 0xF800
 b clear
 
 noMatch:                @ The item needs to be passed to CreateItemEntity
-ldr r3, =#0x3003FA8
+ldr r3, receivingItem
 mov r0, r4
 ldrb r1, [r3, #0x1]
 mov r2, #0x0
-ldr r3, =#0x8F13C8C     @ Jump to clear label after CreateItemEntity
+ldr r3, =#0x80A73F9     @ Call CreateItemEntity
 mov lr, r3
-ldr r4, =#0x80A73F9     @ Call CreateItemEntity
-bx r4
+.short 0xF800
+
 
 clear:
-ldr r3, =#0x3003FA8     @ Reload the memory address to be cleared for the next cycle
+ldr r3, receivingItem   @ Reload the memory address to be cleared for the next cycle
 mov r4, #0x0
 strh r4, [r3]
 
@@ -59,3 +60,6 @@ bx r7
 .align
 .ltorg
 tableGiveItem:
+@POIN tableGiveItem
+@POIN receivingItem
+@POIN returnPoint

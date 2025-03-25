@@ -1,9 +1,3 @@
-// --------------------------------
-// Options intended to always be on
-// --------------------------------
-
-#define glitchless
-
 // -----------------------------
 // Hard-coded options for v0.1.0
 // -----------------------------
@@ -16,5 +10,7 @@
 #define requirementElementsAmmount 4        // Require 1-4 elements to open DHC
 
 // #define openDHC                          // DHC is open from the start, can be used with pedestalItems
-// #define pedestalItems                    // Randomize the pedestal locations? Not sure if this does anything else yet
+// #define pedestalItems                    // Randomizes pedestal items? Only applicable on openDHC
 // #define noDHC                            // Pulling from pedestal jumps to credits. Cannot be used with openDHC
+
+// #define glitchless                       // Controls whether things like ocarina glitch are enabled
