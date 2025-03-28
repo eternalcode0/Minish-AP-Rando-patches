@@ -4,7 +4,7 @@ ALIGN 4
 apItem:
 #incbin "asm/apItem.dmp"
 POIN itemHandlerTable
-WORD 0x203FE20
+WORD 0x203FF10
 
 ALIGN 4
 itemHandlerTable:
