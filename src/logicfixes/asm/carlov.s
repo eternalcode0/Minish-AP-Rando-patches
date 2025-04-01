@@ -1,5 +1,4 @@
-.equ sub, item+4
-.equ figurines, sub+4
+.equ figurines, item+4
 .thumb
 push	{lr}
 @check figurine count
@@ -19,8 +18,9 @@ cmp	r0,#0
 bne	end
 
 @if not set, hand out item
-ldr	r0,item
-ldr	r1,sub
+ldr	r2,item
+ldrb	r0,[r2,#0]
+ldrb	r1,[r2,#1]
 mov	r2,#0
 ldr	r3,=#0x80A7410
 mov	lr,r3

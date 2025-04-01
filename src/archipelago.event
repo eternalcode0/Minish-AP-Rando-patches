@@ -114,3 +114,11 @@ PUSH; ORG itemSwampGraveDojo; BYTE swiftbladeIDojoItem swiftbladeIDojoSub; POP
 PUSH; ORG itemSwampWaterfallDojo; BYTE scarbladeDojoItem scarbladeDojoSub; POP
 PUSH; ORG itemFallsDojo; BYTE splitbladeDojoItem splitbladeDojoSub; POP
 PUSH; ORG itemNorthFieldDojo; BYTE greatbladeDojoItem greatbladeDojoSub; POP
+
+#ifndef carlovSpotItem
+    #define carlovSpotItem 0x3E
+#endif
+#ifndef carlovSpotSub
+    #define carlovSpotSub 0x00
+#endif
+PUSH; ORG itemCarlov; BYTE carlovSpotItem carlovSpotSub; POP

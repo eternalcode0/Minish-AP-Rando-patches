@@ -251,12 +251,6 @@ ALIGN 4
 bellHeart:
 #incbin "asm/bellHeart.dmp"
 
-#ifndef carlovSpotItem
-    #define carlovSpotItem 0x3E
-#endif
-#ifndef carlovSpotSub
-    #define carlovSpotSub 0x00
-#endif
 #ifndef carlovFigurineRequirement
     #define carlovFigurineRequirement 0x00
 #endif
@@ -265,8 +259,7 @@ PUSH; ORG $87EF4; jumpToHack(carlov); POP
 ALIGN 4
 carlov:
 #incbin "asm/carlov.dmp"
-WORD carlovSpotItem
-WORD carlovSpotSub
+POIN itemCarlov
 WORD carlovFigurineRequirement
 PUSH; ORG $146F2; SHORT 0; POP //carlov doesn't check for medal
 PUSH; ORG $7DDEE; SHORT 0x2100; ORG $14812; SHORT 0x432B; POP //carlov thinks you never have shells
