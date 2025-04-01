@@ -110,8 +110,8 @@ SHORT 0x3D07 6; WORD 0x2002CB4 //set the simulation heart piece flag after it en
 SHORT 0x4803 1; WORD 0x2002CA1 //library quest can be started with flippers
 SHORT 0x0517 1; WORD 0x2002CA1 //picking up the ocarina automatically starts the library quest
 SHORT 0x0517 3; WORD 0x2002A83 //picking up the ocarina automatically unlocks city crest
-SHORT 0x051C 3; WORD 0x2002CEC //gentari door opens when getting bombs
-SHORT 0x0508 3; WORD 0x2002CEC //gentari door opens when getting remote bombs
+SHORT 0x0507 3; WORD 0x2002CEC //gentari door opens when getting bombs
+//SHORT 0x0508 3; WORD 0x2002CEC //gentari door opens when getting remote bombs
 SHORT 0x055B 2; WORD 0x2002CEC //festari moves automatically when getting the nut
 SHORT 0x0546 2; WORD 0x2002CEC //festari moves automatically when getting the flippers
 SHORT 0x0546 3; WORD 0x2002CD5 //the soldier goes away when you get the flippers
