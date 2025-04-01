@@ -85,12 +85,7 @@ allFusions:
 #endif
 
 kinstoneBag:
-#ifdef noFusions
-    BYTE 6
-    #else
-    BYTE 1
-    BYTE 0
-#endif
+BYTE 0x40
 
 fusionNumber:
 #ifdef noFusions
