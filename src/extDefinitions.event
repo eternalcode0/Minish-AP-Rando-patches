@@ -14,3 +14,31 @@
 // #define noDHC                            // Pulling from pedestal jumps to credits. Cannot be used with openDHC
 
 // #define glitchless                       // Controls whether things like ocarina glitch are enabled
+
+// -----------------------------------------
+// Dedicated placements for randomized items
+// -----------------------------------------
+
+// The addresses for various vanilla locations for the apworld to re-point to
+
+// Yes I could just let these auto-increment but I don't want them shifting on
+// me if I place something in between
+
+#define itemCastleDojo              $FF0000 // Sword Beam
+#define itemFallsDojo               $FF0004 // Fast Split
+#define itemHyliaDojo               $FF0008 // Peril Beam
+#define itemTrilbyScrub             $FF000C // Bottle
+#define itemCrenelScrub             $FF0010 // Grip Ring
+#define itemCrenelDojo              $FF0014 // Roll Attack
+#define itemSwampWaterfallDojo      $FF0018 // Fast Spin
+#define itemSwampGraveDojo          $FF001C // Greatspin
+#define itemStockwell80Item         $FF0020 // Big Wallet
+#define itemStockwell300Item        $FF0024 // Boomerang
+#define itemStockwell600Item        $FF0028 // Quiver
+#define itemStockwellCounterItem    $FF002C // Dog Food
+#define itemTownDojo1               $FF0030 // Spin Attack
+#define itemTownDojo2               $FF0034 // Rock Breaker
+#define itemTownDojo3               $FF0038 // Dash Attack
+#define itemTownDojo4               $FF003C // Down Thrust
+#define itemCarlov                  $FF0040 // Carlov Medal
+#define itemNorthFieldDojo          $FF0044 // Long Spin
