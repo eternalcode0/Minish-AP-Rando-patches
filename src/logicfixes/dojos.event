@@ -1,70 +1,3 @@
-#ifndef swiftbladeIDojoItem
-	#define swiftbladeIDojoItem "0x4D"
-#endif
-#ifndef swiftbladeIDojoSub
-	#define swiftbladeIDojoSub "0x00"
-#endif
-#ifndef swiftblade1DojoItem
-	#define swiftblade1DojoItem "0x48"
-#endif
-#ifndef swiftblade1DojoSub
-	#define swiftblade1DojoSub "0x00"
-#endif
-#ifndef swiftblade2DojoItem
-	#define swiftblade2DojoItem "0x4B"
-#endif
-#ifndef swiftblade2DojoSub
-	#define swiftblade2DojoSub "0x00"
-#endif
-#ifndef swiftblade3DojoItem
-	#define swiftblade3DojoItem "0x4A"
-#endif
-#ifndef swiftblade3DojoSub
-	#define swiftblade3DojoSub "0x00"
-#endif
-#ifndef swiftblade4DojoItem
-	#define swiftblade4DojoItem "0x4E"
-#endif
-#ifndef swiftblade4DojoSub
-	#define swiftblade4DojoSub "0x00"
-#endif
-#ifndef graybladeDojoItem
-	#define graybladeDojoItem "0x49"
-#endif
-#ifndef graybladeDojoSub
-	#define graybladeDojoSub "0x00"
-#endif
-#ifndef wavebladeDojoItem
-	#define wavebladeDojoItem "0x4F"
-#endif
-#ifndef wavebladeDojoSub
-	#define wavebladeDojoSub "0x00"
-#endif
-#ifndef grimbladeDojoItem
-	#define grimbladeDojoItem "0x4C"
-#endif
-#ifndef grimbladeDojoSub
-	#define grimbladeDojoSub "0x00"
-#endif
-#ifndef scarbladeDojoItem
-	#define scarbladeDojoItem "0x73"
-#endif
-#ifndef scarbladeDojoSub
-	#define scarbladeDojoSub "0x00"
-#endif
-#ifndef splitbladeDojoItem
-	#define splitbladeDojoItem "0x74"
-#endif
-#ifndef splitbladeDojoSub
-	#define splitbladeDojoSub "0x00"
-#endif
-#ifndef greatbladeDojoItem
-	#define greatbladeDojoItem "0x75"
-#endif
-#ifndef greatbladeDojoSub
-	#define greatbladeDojoSub "0x00"
-#endif
-
 PUSH; ORG $68698; jumpToHack(dojosLoad); POP
 ALIGN 4
 dojosLoad:
@@ -93,17 +26,17 @@ dojosFlagsSet:
 POIN dojosFlagsSetTable
 ALIGN 4
 dojosFlagsSetTable:
-BYTE 12 swiftblade1DojoItem swiftblade1DojoSub //0x48 Spin Attack
-BYTE 13 swiftblade2DojoItem swiftblade2DojoSub //0x4B Rock Breaker
-BYTE 14 swiftblade3DojoItem swiftblade3DojoSub //0x4A Dash Attack
-BYTE 15 swiftblade4DojoItem swiftblade4DojoSub //0x4E Down Thrust
-BYTE 16 graybladeDojoItem graybladeDojoSub //0x49 Roll Attack
-BYTE 17 grimbladeDojoItem grimbladeDojoSub //0x4C Sword Beam
-BYTE 18 wavebladeDojoItem wavebladeDojoSub //0x4F Peril Beam
-BYTE 19 swiftbladeIDojoItem swiftbladeIDojoSub //0x4D Great Spin Attack
-BYTE 20 scarbladeDojoItem scarbladeDojoSub //0x73 Sped Up Charged Great Spin Attack
-BYTE 21 splitbladeDojoItem splitbladeDojoSub //0x74 Sped Up Split Gauge
-BYTE 22 greatbladeDojoItem greatbladeDojoSub //0x75 Increased Great Spin Attack Rotation Time
+POIN itemTownDojo1; WORD 12 //0x48 Spin Attack
+POIN itemTownDojo2; WORD 13 //0x4B Rock Breaker
+POIN itemTownDojo3; WORD 14 //0x4A Dash Attack
+POIN itemTownDojo4; WORD 15 //0x4E Down Thrust
+POIN itemCrenelDojo; WORD 16 //0x49 Roll Attack
+POIN itemCastleDojo; WORD 17 //0x4C Sword Beam
+POIN itemHyliaDojo; WORD 18 //0x4F Peril Beam
+POIN itemSwampGraveDojo; WORD 19 //0x4D Great Spin Attack
+POIN itemSwampWaterfallDojo; WORD 20 //0x73 Sped Up Charged Great Spin Attack
+POIN itemFallsDojo; WORD 21 //0x74 Sped Up Split Gauge
+POIN itemNorthFieldDojo; WORD 22 //0x75 Increased Great Spin Attack Rotation Time
 
 //long great spin bro does not ask for great spin
 PUSH; ORG $68818; SHORT 0x2000; POP
