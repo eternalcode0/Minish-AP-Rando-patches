@@ -1,8 +1,5 @@
-.equ walletShopSub, walletShopItem+4
-.equ boomerangShopItem, walletShopSub+4
-.equ boomerangShopSub, boomerangShopItem+4
-.equ quiverShopItem, boomerangShopSub+4
-.equ quiverShopSub, quiverShopItem+4
+.equ boomerangShopItem, walletShopItem+4
+.equ quiverShopItem, boomerangShopItem+4
 .thumb
 cmp	r5,#0x64
 beq	wallet
@@ -34,8 +31,9 @@ mov	r1,#24
 ldr	r3,=#0x801D5F4	@vanilla flag set routine
 mov	lr,r3
 .short	0xF800
-ldr	r0,walletShopItem
-ldr	r1,walletShopSub
+ldr	r1,walletShopItem
+ldrb	r0,[r1,#0]
+ldrb	r1,[r1,#1]
 b	end
 
 boomerang:
@@ -44,8 +42,9 @@ mov	r1,#25
 ldr	r3,=#0x801D5F4	@vanilla flag set routine
 mov	lr,r3
 .short	0xF800
-ldr	r0,boomerangShopItem
-ldr	r1,boomerangShopSub
+ldr	r1,boomerangShopItem
+ldrb	r0,[r1,#0]
+ldrb	r1,[r1,#1]
 b	end
 
 quiver:
@@ -54,16 +53,14 @@ mov	r1,#26
 ldr	r3,=#0x801D5F4	@vanilla flag set routine
 mov	lr,r3
 .short	0xF800
-ldr	r0,quiverShopItem
-ldr	r1,quiverShopSub
+ldr	r1,quiverShopItem
+ldrb	r0,[r1,#0]
+ldrb	r1,[r1,#1]
 b	end
 
 .align
 .ltorg
 walletShopItem:
-@WORD walletShopItem
-@WORD walletShopSub
-@WORD boomerangShopItem
-@WORD boomerangShopSub
-@WORD quiverShopItem
-@WORD quiverShopSub
+@POIN walletShopItem
+@POIN boomerangShopItem
+@POIN quiverShopItem

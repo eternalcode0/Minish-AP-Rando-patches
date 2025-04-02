@@ -1,9 +1,6 @@
-.equ walletShopSub, walletShopItem+4
-.equ boomerangShopItem, walletShopSub+4
-.equ boomerangShopSub, boomerangShopItem+4
-.equ quiverShopItem, boomerangShopSub+4
-.equ quiverShopSub, quiverShopItem+4
-.equ getTextOffset, quiverShopSub+4
+.equ boomerangShopItem, walletShopItem+4
+.equ quiverShopItem, boomerangShopItem+4
+.equ getTextOffset, quiverShopItem+4
 .equ shootbutterflyCredits, getTextOffset+4
 .equ digbutterflyCredits, shootbutterflyCredits+4
 .equ swimbutterflyCredits, digbutterflyCredits+4
@@ -26,24 +23,27 @@ beq	quiver
 b	vanilla
 
 wallet:
-ldr	r0,walletShopItem
-ldr	r1,walletShopSub
+ldr	r1,walletShopItem
+ldrb	r0,[r1,#0]
+ldrb	r1,[r1,#1]
 bl	getText
 mov	r1,r3
 mov	r2,#0
 b	buildText
 
 boomerang:
-ldr	r0,boomerangShopItem
-ldr	r1,boomerangShopSub
+ldr	r1,boomerangShopItem
+ldrb	r0,[r1,#0]
+ldrb	r1,[r1,#1]
 bl	getText
 mov	r1,r3
 mov	r2,#1
 b	buildText
 
 quiver:
-ldr	r0,quiverShopItem
-ldr	r1,quiverShopSub
+ldr	r1,quiverShopItem
+ldrb	r0,[r1,#0]
+ldrb	r1,[r1,#1]
 bl	getText
 mov	r1,r3
 mov	r2,#2

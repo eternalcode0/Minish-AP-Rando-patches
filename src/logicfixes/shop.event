@@ -49,23 +49,17 @@ PUSH; ORG $64ECC; jumpToHack(shopBuy); POP
 ALIGN 4
 shopBuy:
 #incbin "asm/shopBuy.dmp"
-WORD walletShopItem
-WORD walletShopSub
-WORD boomerangShopItem
-WORD boomerangShopSub
-WORD quiverShopItem
-WORD quiverShopSub
+POIN itemStockwell80Item
+POIN itemStockwell300Item
+POIN itemStockwell600Item
 
 PUSH; ORG $64BB4; jumpToHack(shopAsk); POP
 ALIGN 4
 shopAsk:
 #incbin "asm/shopAsk.dmp"
-WORD walletShopItem
-WORD walletShopSub
-WORD boomerangShopItem
-WORD boomerangShopSub
-WORD quiverShopItem
-WORD quiverShopSub
+POIN itemStockwell80Item
+POIN itemStockwell300Item
+POIN itemStockwell600Item
 POIN getTextOffset
 POIN shootbutterflyCredits
 POIN digbutterflyCredits
@@ -88,10 +82,12 @@ ORG $AAAB9C+20; WORD 0x203F200-$8AAAB9C
 ORG $AED2FC+20; WORD 0x203F200-$8AED2FC
 POP
 
-ALIGN 4
+PUSH
+ORG itemStockwellBackItem-3
 shopFloor:
 BYTE 0x06 0x0F 0x00 dogShopItem dogShopSub 0x04; SHORT 0 0x90 0x54 0 0x53 //floor item
 shopTerminator
+POP
 
 ALIGN 4
 shopShield:
@@ -106,17 +102,23 @@ shopItem(0x6E,0x00,0x6E,0x52,0x40) //20 arrows, always spawns
 shopItem(0x6F,0x00,0x6F,0x64,0x40) //50 arrows, always spawns
 shopTerminator
 
-ALIGN 4
+PUSH
+ORG itemStockwell80Item-3
 shopBuy1:
 shopItem(walletShopItem,walletShopSub,0x64,0x2D,0x80) //first randomized item
 shopTerminator
+POP
 
-ALIGN 4
+PUSH
+ORG itemStockwell300Item-3
 shopBuy2:
 shopItem(boomerangShopItem,boomerangShopSub,0x0B,0x40,0x80) //second randomized item
 shopTerminator
+POP
 
-ALIGN 4
+PUSH
+ORG itemStockwell600Item-3
 shopBuy3:
 shopItem(quiverShopItem,quiverShopSub,0x66,0x52,0x80) //third randomized item
 shopTerminator
+POP
