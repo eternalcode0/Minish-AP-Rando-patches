@@ -1,17 +1,14 @@
-.equ return, table+4
+.equ item, shopData+4
+.equ return, item+4
 .thumb
 push	{r1}
-ldr	r0,table
-loop:
-ldr	r1,[r0]
-cmp	r1,#0
-beq	vanilla
+ldr	r1,shopData
 cmp	r1,r6
 beq	match
-add	r0,#8
-b	loop
+b	vanilla
 
 match:
+ldr	r0,item
 ldrh	r1,[r0,#4]
 cmp	r1,#0x1B
 beq	dontreplace
@@ -42,4 +39,4 @@ bx	r3
 
 .align
 .ltorg
-table:
+shopData:

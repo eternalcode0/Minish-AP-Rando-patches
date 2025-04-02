@@ -426,10 +426,8 @@ PUSH; ORG $560AC; jumpToHack(smallShopsText); POP
 ALIGN 4
 smallShopsText:
 #incbin "asm/smallShopsText.dmp"
-WORD bottleScrubItem
-WORD bottleScrubSub
-WORD gripScrubItem
-WORD gripScrubSub
+POIN itemTrilbyScrub
+POIN itemCrenelScrub
 POIN getTextOffset
 POIN shootbutterflyCredits
 POIN digbutterflyCredits

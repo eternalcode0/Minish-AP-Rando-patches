@@ -115,10 +115,64 @@ PUSH; ORG itemSwampWaterfallDojo; BYTE scarbladeDojoItem scarbladeDojoSub; POP
 PUSH; ORG itemFallsDojo; BYTE splitbladeDojoItem splitbladeDojoSub; POP
 PUSH; ORG itemNorthFieldDojo; BYTE greatbladeDojoItem greatbladeDojoSub; POP
 
+#ifndef bottleScrubItem
+	#define bottleScrubItem	0x1C
+#endif
+#ifndef bottleScrubSub
+	#define bottleScrubSub	0x00
+#endif
+#ifndef gripScrubItem
+	#define gripScrubItem	0x44
+#endif
+#ifndef gripScrubSub
+	#define gripScrubSub	0x00
+#endif
+//#ifndef stoneScrubItem
+//	#define stoneScrubItem	0x5C
+//#endif
+//#ifndef stoneScrubSub
+//	#define stoneScrubSub	0x00
+//#endif
+PUSH; ORG itemTrilbyScrub; BYTE bottleScrubItem bottleScrubSub; POP
+PUSH; ORG itemCrenelScrub; BYTE gripScrubItem gripScrubSub; POP
+//PUSH; ORG itemUnknownScrub; BYTE stoneScrubItem stoneScrubSub; POP
+
+
 #ifndef carlovSpotItem
     #define carlovSpotItem 0x3E
 #endif
 #ifndef carlovSpotSub
     #define carlovSpotSub 0x00
 #endif
+
 PUSH; ORG itemCarlov; BYTE carlovSpotItem carlovSpotSub; POP
+
+#ifndef walletShopItem
+	#define walletShopItem "0x64"
+#endif
+#ifndef walletShopSub
+	#define walletShopSub "0x00"
+#endif
+#ifndef boomerangShopItem
+	#define boomerangShopItem "0x0B"
+#endif
+#ifndef boomerangShopSub
+	#define boomerangShopSub "0x00"
+#endif
+#ifndef quiverShopItem
+	#define quiverShopItem "0x66"
+#endif
+#ifndef quiverShopSub
+	#define quiverShopSub "0x00"
+#endif
+#ifndef dogShopItem
+	#define dogShopItem "0x36"
+#endif
+#ifndef dogShopSub
+	#define dogShopSub "0x00"
+#endif
+
+PUSH; ORG itemStockwell80Item; BYTE walletShopItem walletShopSub; POP
+PUSH; ORG itemStockwell300Item; BYTE boomerangShopItem boomerangShopSub; POP
+PUSH; ORG itemStockwell600Item; BYTE quiverShopItem quiverShopSub; POP
+PUSH; ORG itemStockwellBackItem; BYTE dogShopItem dogShopSub; POP

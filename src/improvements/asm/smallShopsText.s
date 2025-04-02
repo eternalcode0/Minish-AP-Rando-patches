@@ -1,7 +1,5 @@
-.equ bottleScrubSub, bottleScrubItem+4
-.equ gripScrubItem, bottleScrubSub+4
-.equ gripScrubSub, gripScrubItem+4
-.equ getTextOffset, gripScrubSub+4
+.equ gripScrubItem, bottleScrubItem+4
+.equ getTextOffset, gripScrubItem+4
 .equ shootbutterflyCredits, getTextOffset+4
 .equ digbutterflyCredits, shootbutterflyCredits+4
 .equ swimbutterflyCredits, digbutterflyCredits+4
@@ -40,8 +38,9 @@ b	buildText
 bottle:
 ldr	r1,=#0x2C05
 push	{r0-r7}
-ldr	r0,bottleScrubItem
-ldr	r1,bottleScrubSub
+ldr	r2,bottleScrubItem
+ldrb	r0,[r2]
+ldrb	r1,[r2,#1]
 bl	getText
 mov	r1,r3
 mov	r2,#1
@@ -50,8 +49,9 @@ b	buildText
 grip:
 ldr	r1,=#0x2C05
 push	{r0-r7}
-ldr	r0,gripScrubItem
-ldr	r1,gripScrubSub
+ldr	r2,gripScrubItem
+ldrb	r0,[r2]
+ldrb	r1,[r2,#1]
 bl	getText
 mov	r1,r3
 mov	r2,#2
@@ -380,10 +380,8 @@ pop	{pc}
 .align
 .ltorg
 bottleScrubItem:
-@WORD bottleScrubItem
-@WORD bottleScrubSub
-@WORD gripScrubItem
-@WORD gripScrubSub
+@POIN bottleScrubItem
+@POIN gripScrubItem
 @POIN getTextOffset
 @POIN shootbutterflyCredits
 @POIN digbutterflyCredits
