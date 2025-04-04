@@ -36,6 +36,9 @@ BYTE 0x6E // 10 Arrows
 BYTE 0x6F // 30 Arrows
 BYTE 0xFF // Terminator
 
+// Temporary fix for Graveyard Key, crow never removes the key from inventory
+PUSH; ORG $9867; BYTE 1; POP
+
 #ifndef swiftbladeIDojoItem
 	#define swiftbladeIDojoItem "0x4D"
 #endif
