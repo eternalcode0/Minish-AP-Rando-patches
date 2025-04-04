@@ -1,28 +1,18 @@
-.equ item, shopData+4
 .equ return, item+4
 .thumb
 push	{r1}
-ldr	r1,shopData
-cmp	r1,r6
-beq	match
-b	vanilla
-
-match:
 ldr	r0,item
-ldrh	r1,[r0,#4]
+ldrh	r1,[r0]
 cmp	r1,#0x1B
-beq	dontreplace
-ldrh	r1,[r0,#6]
-cmp	r1,#0xFF
-beq	replace
+bne	replace
 dontreplace:
-ldrh	r1,[r0,#6]
+ldrh	r1,[r0]
 pop	{r2}
 b	jump
 replace:
 pop	{r1}
 jump:
-ldrh	r0,[r0,#4]
+ldrh	r0,[r0]
 b	end
 
 vanilla:
@@ -39,4 +29,4 @@ bx	r3
 
 .align
 .ltorg
-shopData:
+item:

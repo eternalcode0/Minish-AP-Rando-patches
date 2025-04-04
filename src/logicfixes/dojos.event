@@ -26,17 +26,17 @@ dojosFlagsSet:
 POIN dojosFlagsSetTable
 ALIGN 4
 dojosFlagsSetTable:
-POIN itemTownDojo1; WORD 12 //0x48 Spin Attack
-POIN itemTownDojo2; WORD 13 //0x4B Rock Breaker
-POIN itemTownDojo3; WORD 14 //0x4A Dash Attack
-POIN itemTownDojo4; WORD 15 //0x4E Down Thrust
-POIN itemCrenelDojo; WORD 16 //0x49 Roll Attack
-POIN itemCastleDojo; WORD 17 //0x4C Sword Beam
-POIN itemHyliaDojo; WORD 18 //0x4F Peril Beam
-POIN itemSwampGraveDojo; WORD 19 //0x4D Great Spin Attack
-POIN itemSwampWaterfallDojo; WORD 20 //0x73 Sped Up Charged Great Spin Attack
-POIN itemFallsDojo; WORD 21 //0x74 Sped Up Split Gauge
-POIN itemNorthFieldDojo; WORD 22 //0x75 Increased Great Spin Attack Rotation Time
+WORD 12; POIN itemTownDojo1 //0x48 Spin Attack
+WORD 13; POIN itemTownDojo2 //0x4B Rock Breaker
+WORD 14; POIN itemTownDojo3 //0x4A Dash Attack
+WORD 15; POIN itemTownDojo4 //0x4E Down Thrust
+WORD 16; POIN itemCrenelDojo //0x49 Roll Attack
+WORD 17; POIN itemCastleDojo //0x4C Sword Beam
+WORD 18; POIN itemHyliaDojo //0x4F Peril Beam
+WORD 19; POIN itemSwampGraveDojo //0x4D Great Spin Attack
+WORD 20; POIN itemSwampWaterfallDojo //0x73 Sped Up Charged Great Spin Attack
+WORD 21; POIN itemFallsDojo //0x74 Sped Up Split Gauge
+WORD 22; POIN itemNorthFieldDojo //0x75 Increased Great Spin Attack Rotation Time
 
 //long great spin bro does not ask for great spin
 PUSH; ORG $68818; SHORT 0x2000; POP

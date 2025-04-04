@@ -1,16 +1,14 @@
-PUSH; ORG $28D80; jumpToHack(scrubHackBottle); POP
+PUSH; ORG $28D70; jumpToHack(scrubHackBottle); POP
 ALIGN 4
 scrubHackBottle:
 #incbin "asm/scrubHack.dmp"
-POIN $CC0B8
 POIN itemTrilbyScrub
 POIN $28D7B
 
-PUSH; ORG $28D70; jumpToHack(scrubHackGrip); POP
+PUSH; ORG $28D80; jumpToHack(scrubHackGrip); POP
 ALIGN 4
 scrubHackGrip:
 #incbin "asm/scrubHack.dmp"
-POIN $CC0A0
 POIN itemCrenelScrub
 POIN $28D89
 
