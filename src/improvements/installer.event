@@ -1,7 +1,7 @@
 #ifndef neverSkipFusionCutscene //define to never skip
-    #ifndef alwaysSkipFusionCutscene
-        #define alwaysSkipFusionCutscene 0 //set to non-0 to skip, set to 0 to skip on button held
-    #endif
+	#ifndef alwaysSkipFusionCutscene
+		#define alwaysSkipFusionCutscene 0 //set to non-0 to skip, set to 0 to skip on button held
+	#endif
 #endif
 
 //remove all ezlo stepping triggers
@@ -115,11 +115,11 @@ questItemSlideshow2:
 #incbin "asm/questItemSlideshow2.dmp"
 
 #ifdef globalElements
-    //if global elements, don't display elements
-    PUSH; ORG $128673; BYTE 0 0xF 0 0xF 0 0xF 0; POP
+	//if global elements, don't display elements
+	PUSH; ORG $128673; BYTE 0 0xF 0 0xF 0 0xF 0; POP
 #else
-    //wind element icon in map goes away when you get the element instead of the ocarina
-    PUSH; ORG $128677; BYTE 0x43; POP
+	//wind element icon in map goes away when you get the element instead of the ocarina
+	PUSH; ORG $128677; BYTE 0x43; POP
 #endif
 
 //finding remote bombs does not remove regular bombs from link and vice versa
@@ -138,7 +138,8 @@ ORG $64E7C; POIN bombLimits
 ORG $A4C24; POIN bombLimits
 POP
 bombLimits:
-BYTE 00 10 30 50 99 99 99 99
+BYTE 0 10 30 50 99 99 99 99
+PUSH; ORG $53D50; SHORT 0; ORG $53D60; SHORT 0; POP //shops too
 PUSH; ORG $53D74; SHORT 0xE001; POP //bag upgrades uncapped
 PUSH; ORG $83610; jumpToHack(firstBag); POP
 ALIGN 4
@@ -307,14 +308,13 @@ escapeWalls:
 
 //normal kinstones have no popups
 PUSH; ORG $80DF4; jumpToHack(fastKinstone); POP
-PUSH; ORG $9D188; SHORT 0 0; POP
 ALIGN 4
 fastKinstone:
 #incbin "asm/fastKinstone.dmp"
 
 //normal kinstones don't get added to the bag in nofusions
 #ifdef noFusions
-    PUSH; ORG $1E778; SHORT 0x2C00 0xD025 0x2C6D; POP
+	PUSH; ORG $1E778; SHORT 0x2C00 0xD025 0x2C6D; POP
 #endif
 
 //elements at cloud tops are only drawn if looking at the top layer
