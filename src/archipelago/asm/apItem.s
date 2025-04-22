@@ -1,10 +1,9 @@
 .equ	receivingItem, tableGiveItem+4
-.equ	returnPoint, clear
 .thumb
 push	{r0-r7}
-ldr	r3, =#0x3001004
+ldr	r3, =#0x2002A4A
 ldrb	r0, [r3]
-cmp	r0, #0x2
+cmp	r0, #0x1
 bne	ap_end
 ldr	r3, receivingItem
 ldrb	r0, [r3]
@@ -55,7 +54,7 @@ ldr	r3, receivingItem
 mov	r4, #0x0
 strh	r4, [r3]
 
-@ Call the original instructions starting at 0x80AD158
+@ Call the original instructions starting at 0x80701D4
 ap_end:
 pop	{ r0-r7 }
 ldr	r6, =#0x3003F80

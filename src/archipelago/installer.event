@@ -1,4 +1,44 @@
-// add ap item handler
+// Check whether the player is safe to perform item receiving / deathlinks
+PUSH; ORG $4FD94; jumpToHack(playerSafe); POP // Fade Main 0x804FD94 (one of the few functions called every frame in all game states)
+ALIGN 4
+playerSafe:
+#incbin "asm/playerSafe.dmp"
+WORD 0x2002A4A // Address to save whether it's safe to handle items or not, 1 if safe
+POIN singleValueCheck
+POIN multiValueCheck
+// Checks that Action Flags (0x3003FB0) are set to any of the allowed flags
+// Allowed list:
+// 0x000002 = Riding Platform
+// 0x004000 = Cursed
+// 0x010000 = Will Respawn to Platform
+// 0x020000 = In Gyorg Fight
+// 0x040000 = Rolling
+// 0x400000 = Has Clones
+// 0x800000 = Lantern On
+WORD 0x00C74002
+
+// Checks that the address is equal to the value after it
+// Address to check; Value;
+ALIGN 4
+singleValueCheck:
+WORD 0x03001004; WORD 2; // Task Substate (Doesn't allow barrel update)
+WORD 0x03001168; WORD 1; // Player Entity Kind
+WORD 0x03001169; WORD 0; // Player Entity ID
+WORD 0x0300116C; WORD 1; // Player Action State
+//WORD 0x03003DC0; WORD 0; // Frozen State
+WORD 0x0300400A; WORD 0; // Textbox (seems to be more than textbox)
+WORD 0x0300400B; WORD 0; // Control
+WORD 0x02034490; WORD 0; // Pause Disabled (OG will set to 1)
+WORD 0xFF;
+
+// Checks that the address is any of the values after it until it hits the terminator 0xFF
+// Not yet implemented
+ALIGN 4
+multiValueCheck:
+WORD 0x03004028; BYTE 0x0 0x1 0x2 0x3 0x4 0x5 0x7 0x9 0x19 0x1A; BYTE 0xFF
+
+
+// add ap item handler, hooks into PlayerNormal handler so it only runs when Link's Action State is 1
 PUSH; ORG $701D4; jumpToHack(apItem); POP
 ALIGN 4
 apItem:

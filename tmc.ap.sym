@@ -604,8 +604,11 @@
 08F13DD4 walletPalette
 08F13E2C walletColors
 08F13E3C splitColor
-08F13E98 apItem
-08F13F0C itemHandlerTable
-08F13F10 idsGiveItem
-08F13F28 newNut1
-08F13F38 newNut2
+08F13E98 playerSafe
+08F13EF0 singleValueCheck
+08F13F2C multiValueCheck
+08F13F3C apItem
+08F13FB0 itemHandlerTable
+08F13FB4 idsGiveItem
+08F13FCC newNut1
+08F13FDC newNut2
