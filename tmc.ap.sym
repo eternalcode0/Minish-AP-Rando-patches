@@ -608,7 +608,7 @@
 08F13EF0 singleValueCheck
 08F13F2C multiValueCheck
 08F13F3C apItem
-08F13FB0 itemHandlerTable
-08F13FB4 idsGiveItem
-08F13FCC newNut1
-08F13FDC newNut2
+08F13FD4 idsGiveItem
+08F13FE8 idsSetInventory
+08F13FFC newNut1
+08F1400C newNut2

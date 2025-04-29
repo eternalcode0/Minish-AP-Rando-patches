@@ -43,12 +43,9 @@ PUSH; ORG $701D4; jumpToHack(apItem); POP
 ALIGN 4
 apItem:
 #incbin "asm/apItem.dmp"
-POIN itemHandlerTable
-WORD 0x203FF10
-
-ALIGN 4
-itemHandlerTable:
 POIN idsGiveItem
+POIN idsSetInventory
+WORD 0x203FF10
 
 idsGiveItem:
 BYTE 0x1C // Bottle 1
@@ -74,7 +71,29 @@ BYTE 0x6C // 10 Bombs
 BYTE 0x6D // 30 Bombs
 BYTE 0x6E // 10 Arrows
 BYTE 0x6F // 30 Arrows
-BYTE 0xFF // Terminator
+BYTE 0xFF // TERMINATOR
+
+idsSetInventory:
+BYTE 0x0F // Lantern
+BYTE 0x11 // Gust Jar
+BYTE 0x12 // Cane of Pacci
+BYTE 0x13 // Mole Mitts
+BYTE 0x14 // Roc's Cape
+BYTE 0x15 // Pegasus Boots
+BYTE 0x17 // Ocarina
+BYTE 0x37 // LonLon Key
+BYTE 0x38 // Wakeup Mushroom
+BYTE 0x39 // Red Book
+BYTE 0x3A // Green Book
+BYTE 0x3B // Blue Book
+BYTE 0x3C // Graveyard Key
+BYTE 0x3D // Tingle Trophy
+BYTE 0x3E // Carlov Medal
+BYTE 0x44 // Grip Ring
+BYTE 0x45 // Power Bracelets
+BYTE 0x46 // Flippers
+BYTE 0x5B // Jabber Nut
+BYTE 0xFF // TERMINATOR
 
 // Temporary fix for Graveyard Key, crow never removes the key from inventory
 //PUSH; ORG $9867; BYTE 1; POP

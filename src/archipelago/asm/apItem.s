@@ -1,4 +1,5 @@
-.equ	receivingItem, tableGiveItem+4
+.equ	idsSetInventory, idsGiveItem+4
+.equ	receivingItem, idsSetInventory+4
 .thumb
 push	{r0-r7}
 ldr	r3, =#0x2002A4A
@@ -12,33 +13,51 @@ mov	r2, #0x0
 cmp	r0, #0x0
 beq	ap_end
 mov	r4, r0
-ldr	r5,tableGiveItem
-ldr	r0, [r5]
+ldr	r0,idsGiveItem
 
 @ Loop through the GiveItem table :8F13C56
-tableLoop:
+giveItemLoop:
 ldrb	r1,[r0]
 @ Check if the item id is in the table, meaning it can be `GiveItem`d
 cmp	r1, r4
-beq	tableMatch
+beq	giveItemMatch
 @ If we've reached the end of the table
 cmp	r1, #0xFF
-beq	noMatch
+beq	notGiveItem
 @ Else increment table index and repeat
 add	r0, #1
-b	tableLoop
+b	giveItemLoop
 
 @ The item in r4 can be `GiveItem`d
-tableMatch:
+giveItemMatch:
 mov	r0, r4
 ldrb	r1, [r3, #0x1]
-ldr	r3, =#0x8053B89     @ Call GiveItem
+ldr	r3, =#0x8053B89		@ Call GiveItem
 mov	lr, r3
 .short	0xF800
 b	clear
 
+notGiveItem:
+ldr	r0, idsSetInventory
+setInventoryLoop:
+ldrb	r1, [r0]
+cmp	r1, r4
+beq	setInventoryMatch
+cmp	r1, #0xFF
+beq	createItem
+add	r0, #1
+b	setInventoryLoop
+
+setInventoryMatch:
+mov	r0, r4
+mov	r1, #1
+ldr	r3, =#0x0807C4C5	@ Call SetInventoryValue
+mov	lr, r3
+.short	0xF800
+b clear
+
 @ The item needs to be passed to CreateItemEntity
-noMatch:
+createItem:
 ldr	r3, receivingItem
 mov	r0, r4
 ldrb	r1, [r3, #0x1]
@@ -66,6 +85,7 @@ bx	r7
 
 .align
 .ltorg
-tableGiveItem:
-@POIN tableGiveItem
+idsGiveItem:
+@POIN idsGiveItem
+@POIN idsSetInventory
 @POIN receivingItem
