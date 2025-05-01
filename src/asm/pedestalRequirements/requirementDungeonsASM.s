@@ -2,11 +2,10 @@
 push	{r4-r5,lr}
 @get target, make sure it is in range
 ldr	r4,dungeons
+ldrb	r4,[r4]
 mov	r5,#0	@counter
 cmp	r4,#0
-bne	min
-mov	r4,#1
-min:
+beq	true
 cmp	r4,#6
 bls	max
 mov	r4,#6

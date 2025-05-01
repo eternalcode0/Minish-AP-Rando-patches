@@ -1,10 +1,9 @@
 .thumb
 push	{lr}
 ldr	r0,tier
+ldrb	r0,[r0]
 cmp	r0,#0
-bne	np1
-mov	r0,#1
-np1:
+beq	true
 cmp	r0,#5
 blo	np2
 mov	r0,#6
