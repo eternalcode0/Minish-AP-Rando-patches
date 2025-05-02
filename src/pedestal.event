@@ -110,11 +110,13 @@ ALIGN 4
 requirementElementsASM:
 #incbin "asm/pedestalRequirements/requirementElementsASM.dmp"
 POIN $701
+PUSH; ORG $701; BYTE 4; POP
 
 ALIGN 4
 requirementSwordTierASM:
 #incbin "asm/pedestalRequirements/requirementSwordTierASM.dmp"
 POIN $702
+PUSH; ORG $702; BYTE 0; POP
 
 #ifdef requirementFigurinesAmmount
 ALIGN 4
@@ -129,6 +131,7 @@ ALIGN 4
 requirementDungeonsASM:
 #incbin "asm/pedestalRequirements/requirementDungeonsASM.dmp"
 POIN $703
+PUSH; ORG $703; BYTE 0; POP
 
 ALIGN 4
 defaultRequirement:

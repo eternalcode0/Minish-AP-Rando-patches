@@ -612,5 +612,5 @@
 08F13FF0 apItem
 08F14088 idsGiveItem
 08F140A0 idsSetInventory
-08F140B4 newNut1
-08F140C4 newNut2
+08F140A8 newNut1
+08F140B8 newNut2
