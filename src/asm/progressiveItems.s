@@ -17,6 +17,15 @@ notshop:
 mov	r2,#0
 doneshop:
 
+@check if this is an ap remote item
+cmp	r0,#0x18
+bcc	progressive
+cmp	r0,#0x1A
+bhi	progressive
+mov	r0,#0
+pop	{r4,r5,r6,r7,pc}
+
+progressive:
 push	{r1-r7}
 @set up the data
 mov	r4,r0	@item ID

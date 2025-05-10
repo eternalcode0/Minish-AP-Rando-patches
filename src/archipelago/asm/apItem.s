@@ -54,7 +54,13 @@ mov	r1, #1
 ldr	r3, =#0x0807C4C5	@ Call SetInventoryValue
 mov	lr, r3
 .short	0xF800
-b clear
+
+@ Reload the memory address to be cleared for the next cycle
+clear:
+ldr	r3, receivingItem
+mov	r4, #0x0
+strh	r4, [r3]
+b	ap_end
 
 @ The item needs to be passed to CreateItemEntity
 createItem:
@@ -66,12 +72,6 @@ mov	r2, #0x0
 ldr	r3, =#0x80A73F9
 mov	lr, r3
 .short	0xF800
-
-@ Reload the memory address to be cleared for the next cycle
-clear:
-ldr	r3, receivingItem
-mov	r4, #0x0
-strh	r4, [r3]
 
 @ Call the original instructions starting at 0x80701D4
 ap_end:
