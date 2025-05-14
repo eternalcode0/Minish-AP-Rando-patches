@@ -65,6 +65,12 @@ String("crash on vba and vbam)"); BYTE 0
     ORG $E2F4F; BYTE 0x17 0x00 0xFE //ocarina
 #endif
 
+// Always place the sword and shield in the smith's room
+PUSH
+ORG $F252B; BYTE 0x01 0x00
+ORG $F253B; BYTE 0x0D 0x00
+POP
+
 //unify golden kinstone fusions (obviously no need to change the royal piece)
 PUSH
 //tornado pieces first, all set to match with 0x65

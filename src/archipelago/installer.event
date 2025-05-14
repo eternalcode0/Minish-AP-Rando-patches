@@ -43,9 +43,6 @@ ALIGN 4
 multiValueCheck:
 WORD 0x03004028; BYTE 0x0 0x1 0x2 0x3 0x4 0x5 0x7 0x9 0x19 0x1A; BYTE 0xFF
 
-// Remove chest opening wait
-PUSH; ORG $A74E2; SHORT 0x0020 0x0020; POP
-
 // add ap item handler, hooks into PlayerNormal handler so it only runs when Link's Action State is 1
 PUSH; ORG $701D4; jumpToHack(apItem); POP
 ALIGN 4

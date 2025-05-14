@@ -18,6 +18,10 @@ mov	r2,#0
 doneshop:
 
 @check if this is an ap remote item
+ldr	r7,=#0x8000710
+ldrb	r7,[r7]
+cmp	r7,#0x01
+bne	progressive
 cmp	r0,#0x18
 bcc	progressive
 cmp	r0,#0x1A
