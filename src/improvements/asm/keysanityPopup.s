@@ -1,4 +1,27 @@
 .thumb
+checkBottle:
+cmp	r6, #0x1C
+blo	notBottle
+cmp	r6, #0x1F
+bhi	notBottle
+
+@bottle found
+cmp	r7,#0
+bne	bottleWithSub
+mov	r7,#0x20
+
+bottleWithSub:
+ldr	r0, =#0x30011E8
+@display the correct icon
+strb	r7, [r0, #0x0A]
+mov	r1, #0
+strb	r1, [r0, #0x0B]
+@get text for the correct item
+ldr	r0, =#0x500
+add	r0, r7
+b	return
+
+notBottle:
 @check if this is a figurine
 cmp	r6,#0x67
 beq	figurine

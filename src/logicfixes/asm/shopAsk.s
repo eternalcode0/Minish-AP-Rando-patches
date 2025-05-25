@@ -204,6 +204,11 @@ cmp	r0,#0x1B
 bne	nottrap
 b	trap
 nottrap:
+cmp	r0,#0x1C
+blo	notBottle
+cmp	r0,#0x20
+blo	bottle
+notBottle:
 cmp	r0,#0x67
 beq	figurine
 cmp	r0,#0x18
