@@ -303,3 +303,13 @@ ORG $2E84C0
 WORD 0 0 0 0 0 0 0 0
 ORG $31EB51; BYTE 0xF6
 POP
+
+// randomizable bottle contents (uses sub id)
+// if sub id is 0, pretend like it's 0x20 (empty bottle)
+PUSH
+ORG $53C7E
+SHORT 0x2F00 // cmp r7,#0
+SHORT 0xD100 // bne bottleWithSub
+SHORT 0x2720 // mov r7,#0x20
+SHORT 0x700F // bottleWithSub: strb r7,[r1]
+POP
