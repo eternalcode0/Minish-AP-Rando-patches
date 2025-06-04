@@ -1,18 +1,29 @@
-.equ return, item+4
+.equ return, table+4
 .thumb
 push	{r1}
-ldr	r0,item
-ldrh	r1,[r0]
-cmp	r1,#0x1B
-bne	replace
+ldr	r0,table
+loop:
+ldr	r1,[r0]
+cmp	r1,#0
+beq	vanilla
+cmp	r1,r6
+beq	match
+add	r0,#8
+b	loop
+
+match:
+ldr	r1,[r0,#4]
+ldrb	r1,[r1,#1]
+cmp	r1,#0xFF
+beq	replace
 dontreplace:
-ldrh	r1,[r0]
 pop	{r2}
 b	jump
 replace:
 pop	{r1}
 jump:
-ldrh	r0,[r0]
+ldr	r0,[r0,#4]
+ldrb	r0,[r0]
 b	end
 
 vanilla:
@@ -29,4 +40,4 @@ bx	r3
 
 .align
 .ltorg
-item:
+table:

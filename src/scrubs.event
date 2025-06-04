@@ -2,23 +2,29 @@ PUSH; ORG $28D70; jumpToHack(scrubHackBottle); POP
 ALIGN 4
 scrubHackBottle:
 #incbin "asm/scrubHack.dmp"
-POIN itemTrilbyScrub
+POIN scrubTable
 POIN $28D7B
 
 PUSH; ORG $28D80; jumpToHack(scrubHackGrip); POP
 ALIGN 4
 scrubHackGrip:
 #incbin "asm/scrubHack.dmp"
-POIN itemCrenelScrub
+POIN scrubTable
 POIN $28D89
 
 //PUSH; ORG $28D4C; jumpToHack(scrubHackStone); POP
 //ALIGN 4
 //scrubHackStone:
 //#incbin "asm/scrubHack.dmp"
-//POIN $CC0DC
-//POIN itemUnknownScrub
+//POIN scrubTable
 //POIN $28D55
+
+ALIGN 4
+scrubTable: //POIN scrub's shop data; SHORT newItemID newItemSubID
+POIN $CC0B8; POIN itemTrilbyScrub
+POIN $CC0A0; POIN itemCrenelScrub
+//POIN $CC0DC; POIN itemMinishScrub // Minish Woods Kinstone scrub
+WORD 0 0 //terminator
 
 //fix grip scrub flag
 PUSH; ORG $29130; jumpToHack(gripScrub1); POP
