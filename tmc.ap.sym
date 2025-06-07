@@ -609,9 +609,9 @@
 08F13F88 splitColor
 08F13FE4 playerSafe
 08F1403C singleValueCheck
-08F14078 multiValueCheck
-08F14088 apItem
-08F14120 idsGiveItem
-08F14138 idsSetInventory
-08F14140 newNut1
-08F14150 newNut2
+08F14080 multiValueCheck
+08F14090 apItem
+08F14128 idsGiveItem
+08F14140 idsSetInventory
+08F14148 newNut1
+08F14158 newNut2

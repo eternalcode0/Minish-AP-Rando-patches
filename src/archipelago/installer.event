@@ -25,6 +25,7 @@ WORD 0x03001004; WORD 2; // Task Substate (Doesn't allow barrel update)
 WORD 0x03001168; WORD 1; // Player Entity Kind
 WORD 0x03001169; WORD 0; // Player Entity ID
 WORD 0x0300116C; WORD 1; // Player Action State
+WORD 0x0300116F; WORD 0; // Sub Timer
 //WORD 0x03003DC0; WORD 0; // Frozen State
 WORD 0x0300400A; WORD 0; // Textbox (seems to be more than textbox)
 WORD 0x0300400B; WORD 0; // Control
