@@ -17,6 +17,9 @@ notshop:
 mov	r2,#0
 doneshop:
 
+@check if this is the element animation
+@cmp	r2, #1
+@beq	progressive
 @check if this is an ap remote item
 ldr	r7,=#0x8000710
 ldrb	r7,[r7]

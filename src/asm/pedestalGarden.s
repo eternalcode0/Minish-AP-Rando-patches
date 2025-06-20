@@ -1,6 +1,10 @@
 .equ	openDHC, dhcBlocker+4
 .thumb
 ldr	r0,openDHC
+mov	r1, #1
+ldr	r3, =#0x801D5E1
+mov	lr, r3
+.short	0xF800
 cmp	r0,#0
 beq	nounlock
 ldr	r0,=#0x2002D0B
