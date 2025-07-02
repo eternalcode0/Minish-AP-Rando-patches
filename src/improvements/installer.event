@@ -457,6 +457,10 @@ PUSH; ORG $83620; SHORT 0x2844; POP
 //faster textbox opening and closing
 PUSH; ORG $5615A; SHORT 0x2008; ORG $5619C; SHORT 0x2008; POP
 
+ALIGN 4
+spawnPoint:
+BYTE 0x22 /*area*/ 0x15 /*room*/ 4 /*facing direction*/ 0 /*transition type*/; SHORT 0x58 /*x*/ 0x38 /*y*/
+
 //warp home after sleep mode
 #ifdef allowHomewarp
 	PUSH; ORG $55DE8; SHORT 0xE018; POP //remove sleep mode functionality
