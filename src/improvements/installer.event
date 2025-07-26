@@ -410,7 +410,7 @@ ORG $7ACC0; SHORT 0x201E
 POP
 
 //cucco game ends instantly if you won
-PUSH; ORG $A0B26; SHORT 0xB408; jumpToHack(cuccoWin); POP
+PUSH; ORG $A0B90; jumpToHack(cuccoWin); POP
 ALIGN 4
 cuccoWin:
 #incbin "asm/cuccoWin.dmp"
@@ -519,6 +519,13 @@ BYTE 0x22 /*area*/ 0x15 /*room*/ 4 /*facing direction*/ 0 /*transition type*/; S
 	String("This will warp you back home and"); BYTE 0x0A
 	String("set your Quickwarp point there."); BYTE 0x00
 #endif
+
+PUSH
+ORG $113A14
+BYTE 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+BYTE 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+BYTE 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+POP
 
 #include "glitchless.event"
 #include "dungeon.event"

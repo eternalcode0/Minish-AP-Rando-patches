@@ -122,3 +122,30 @@ shopBuy3:
 shopItem(quiverShopItem,quiverShopSub,0x66,0x52,0x80) //third randomized item
 shopTerminator
 POP
+
+//Goron Merchant can sell any items
+PUSH; ORG $5D1B8; jumpToHack(goronMerchantItems); POP
+ALIGN 4
+goronMerchantItems:
+#incbin "asm/goronMerchantItems.dmp"
+POIN goronMerchantCustomSets
+POIN goron1Left
+WORD 1
+
+//Goron Merchant uses Link's position instead of subtype to determine price
+PUSH; ORG $69134; jumpToHack(goronMerchantPrice); POP
+ALIGN 4
+goronMerchantPrice:
+#incbin "asm/goronMerchantPrice.dmp"
+
+PUSH
+//Goron Merchant doesn't care about boss flags for restocking
+ORG $5D112; SHORT 0x46C0
+ORG $5D12E; SHORT 0x46C0
+ORG $5D14A; SHORT 0x46C0
+ORG $5D166; SHORT 0x46C0
+//Allow buying item even if Kinstone bag is full
+ORG $691A8; SHORT 0x46C0
+//Receive bought item instead of Kinstone
+ORG $691B2; SHORT 0x79A8 // ldrb r0,[r5,#6]
+POP

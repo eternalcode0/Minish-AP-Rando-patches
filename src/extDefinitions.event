@@ -51,3 +51,24 @@
 #define itemStockwell300Item	$FF0073 // Boomerang
 #define itemStockwell600Item	$FF0093 // Quiver
 #define itemStockwellBackItem	$FF00B3 // Dog Food
+
+#define goron1Left		$FF00D0
+#define goron1Middle		$FF00D2
+#define goron1Right		$FF00D4
+//spacer			$FF00D6
+#define goron2Left		$FF00D8
+#define goron2Middle		$FF00DA
+#define goron2Right		$FF00DC
+//spacer			$FF00DE
+#define goron3Left		$FF00E0
+#define goron3Middle		$FF00E2
+#define goron3Right		$FF00E4
+//spacer			$FF00E6
+#define goron4Left		$FF00E8
+#define goron4Middle		$FF00EA
+#define goron4Right		$FF00EC
+//spacer			$FF00EE
+#define goron5Left		$FF00F0
+#define goron5Middle		$FF00F2
+#define goron5Right		$FF00F4
+#define goronMerchantCustomSets	$FF00F6

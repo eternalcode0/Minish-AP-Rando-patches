@@ -270,3 +270,111 @@ PUSH; ORG itemPedSword1; BYTE pedestalSpot1Item pedestalSpot1Sub; POP
 PUSH; ORG itemPedSword2; BYTE pedestalSpot2Item pedestalSpot2Sub; POP
 PUSH; ORG itemPedSword3; BYTE pedestalSpot3Item pedestalSpot3Sub; POP
 PUSH; ORG itemReqReward; BYTE requirementRewardItem requirementRewardSub; POP
+
+#ifndef goron1LeftItem
+	#define goron1LeftItem "0x5C"
+#endif
+#ifndef goron1LeftSub
+	#define goron1LeftSub "0x6E"
+#endif
+#ifndef goron1MiddleItem
+	#define goron1MiddleItem "0x5C"
+#endif
+#ifndef goron1MiddleSub
+	#define goron1MiddleSub "0x71"
+#endif
+#ifndef goron1RightItem
+	#define goron1RightItem "0x5C"
+#endif
+#ifndef goron1RightSub
+	#define goron1RightSub "0x73"
+#endif
+#ifndef goron2LeftItem
+	#define goron2LeftItem "0x5C"
+#endif
+#ifndef goron2LeftSub
+	#define goron2LeftSub "0x6E"
+#endif
+#ifndef goron2MiddleItem
+	#define goron2MiddleItem "0x5C"
+#endif
+#ifndef goron2MiddleSub
+	#define goron2MiddleSub "0x71"
+#endif
+#ifndef goron2RightItem
+	#define goron2RightItem "0x5C"
+#endif
+#ifndef goron2RightSub
+	#define goron2RightSub "0x73"
+#endif
+#ifndef goron3LeftItem
+	#define goron3LeftItem "0x5C"
+#endif
+#ifndef goron3LeftSub
+	#define goron3LeftSub "0x6E"
+#endif
+#ifndef goron3MiddleItem
+	#define goron3MiddleItem "0x5C"
+#endif
+#ifndef goron3MiddleSub
+	#define goron3MiddleSub "0x71"
+#endif
+#ifndef goron3RightItem
+	#define goron3RightItem "0x5C"
+#endif
+#ifndef goron3RightSub
+	#define goron3RightSub "0x73"
+#endif
+#ifndef goron4LeftItem
+	#define goron4LeftItem "0x5C"
+#endif
+#ifndef goron4LeftSub
+	#define goron4LeftSub "0x6E"
+#endif
+#ifndef goron4MiddleItem
+	#define goron4MiddleItem "0x5C"
+#endif
+#ifndef goron4MiddleSub
+	#define goron4MiddleSub "0x71"
+#endif
+#ifndef goron4RightItem
+	#define goron4RightItem "0x5C"
+#endif
+#ifndef goron4RightSub
+	#define goron4RightSub "0x73"
+#endif
+#ifndef goron5LeftItem
+	#define goron5LeftItem "0x5C"
+#endif
+#ifndef goron5LeftSub
+	#define goron5LeftSub "0x6E"
+#endif
+#ifndef goron5MiddleItem
+	#define goron5MiddleItem "0x5C"
+#endif
+#ifndef goron5MiddleSub
+	#define goron5MiddleSub "0x71"
+#endif
+#ifndef goron5RightItem
+	#define goron5RightItem "0x5C"
+#endif
+#ifndef goron5RightSub
+	#define goron5RightSub "0x73"
+#endif
+
+PUSH; ORG goron1Left; BYTE goron1LeftItem goron1LeftSub; POP
+PUSH; ORG goron1Middle; BYTE goron1MiddleItem goron1MiddleSub; POP
+PUSH; ORG goron1Right; BYTE goron1RightItem goron1RightSub; POP
+PUSH; ORG goron2Left; BYTE goron2LeftItem goron2LeftSub; POP
+PUSH; ORG goron2Middle; BYTE goron2MiddleItem goron2MiddleSub; POP
+PUSH; ORG goron2Right; BYTE goron2RightItem goron2RightSub; POP
+PUSH; ORG goron3Left; BYTE goron3LeftItem goron3LeftSub; POP
+PUSH; ORG goron3Middle; BYTE goron3MiddleItem goron3MiddleSub; POP
+PUSH; ORG goron3Right; BYTE goron3RightItem goron3RightSub; POP
+PUSH; ORG goron4Left; BYTE goron4LeftItem goron4LeftSub; POP
+PUSH; ORG goron4Middle; BYTE goron4MiddleItem goron4MiddleSub; POP
+PUSH; ORG goron4Right; BYTE goron4RightItem goron4RightSub; POP
+PUSH; ORG goron5Left; BYTE goron5LeftItem goron5LeftSub; POP
+PUSH; ORG goron5Middle; BYTE goron5MiddleItem goron5MiddleSub; POP
+PUSH; ORG goron5Right; BYTE goron5RightItem goron5RightSub; POP
+PUSH; ORG goronMerchantCustomSets; BYTE 5; POP
