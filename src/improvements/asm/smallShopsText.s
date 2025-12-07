@@ -1,5 +1,6 @@
 .equ gripScrubItem, bottleScrubItem+4
-.equ getTextOffset, gripScrubItem+4
+.equ goronMerchantCustomSets, gripScrubItem+4
+.equ getTextOffset, goronMerchantCustomSets+4
 .equ shootbutterflyCredits, getTextOffset+4
 .equ digbutterflyCredits, shootbutterflyCredits+4
 .equ swimbutterflyCredits, digbutterflyCredits+4
@@ -11,50 +12,136 @@
 .equ redclockCredits, blueclockCredits+4
 .equ figurineCredits, redclockCredits+4
 .equ trapGetIcon, figurineCredits+4
+.equ extraText, trapGetIcon+4
+.equ kinstoneText, extraText+4
+.equ progressiveTraps, kinstoneText+4
 .thumb
 ldrh	r1,[r4,#8]
 ldr	r3,=#0x2D07
 cmp	r3,r1
-beq	witch
+beq	witchShop
 ldr	r3,=#0x2910
 cmp	r3,r1
-beq	bottle
+beq	bottleShop
 ldr	r3,=#0x290C
 cmp	r3,r1
-beq	grip
+beq	gripShop
+ldr	r3,=#0x2C1C
+cmp	r3,r1
+bne	branchtoend
+
+@check current Goron Merchant set number
+push	{r0-r3}
+ldr	r1,=#0x2002CA3
+ldrb	r3,[r1]
+mov	r2,#0
+mov	r0,#0x40
+tst	r3,r0
+beq	result
+add	r2,#1
+mov	r0,#0x80
+tst	r3,r0
+beq	result
+add	r2,#1
+ldrb	r3,[r1,#1]
+mov	r0,#0x01
+tst	r3,r0
+beq	result
+add	r2,#1
+mov	r0,#0x02
+tst	r3,r0
+beq	result
+add	r2,#1
+
+result:
+ldr	r1,goronMerchantCustomSets
+ldrb	r1,[r1]
+cmp	r1,r2
+pop	{r0-r3}
+bhi	goronShop
+
+branchtoend:
 b	end
 
-witch:
+witchShop:
 ldr	r1,=#0x2C05
 push	{r0-r7}
 ldr	r1,=#0x80F94D7
 ldrb	r0,[r1]
 ldrb	r1,[r1,#1]
+ldr	r4,=#0x3001160
 bl	getText
 mov	r1,r3
 mov	r2,#0
 b	buildText
 
-bottle:
+bottleShop:
 ldr	r1,=#0x2C05
 push	{r0-r7}
 ldr	r2,bottleScrubItem
 ldrb	r0,[r2]
 ldrb	r1,[r2,#1]
+ldr	r4,=#0x3001160
 bl	getText
 mov	r1,r3
 mov	r2,#1
 b	buildText
 
-grip:
+gripShop:
 ldr	r1,=#0x2C05
 push	{r0-r7}
 ldr	r2,gripScrubItem
 ldrb	r0,[r2]
 ldrb	r1,[r2,#1]
+ldr	r4,=#0x3001160
 bl	getText
 mov	r1,r3
 mov	r2,#2
+b	buildText
+
+goronShop:
+ldr	r1,=#0x2C05
+push	{r0-r7}
+ldr	r1,=#0x2034350
+ldrb	r0,[r1,#6]
+ldrb	r1,[r1,#7]
+cmp	r0,#0x1B
+bne	nogorontrap
+
+@find the right offset for this item
+ldr	r2,=#0x30015A0
+traploop:
+@entity must be an object
+ldrb	r3,[r2,#0x8]
+cmp	r3,#0x6
+bne	continue
+@object must be a shop item
+ldrb	r3,[r2,#0x9]
+cmp	r3,#0x2
+bne	continue
+@object must have a non-zero z coordinate
+mov	r3,#0x36
+ldrh	r3,[r2,r3]
+cmp	r3,#0x0
+beq	continue
+@item must line up with the held item
+ldrb	r3,[r2,#0xA]
+cmp	r3,r0
+bne	continue
+ldrb	r3,[r2,#0xB]
+cmp	r3,r1
+beq	match
+continue:
+add	r2,#0x88
+b	traploop
+
+match:
+mov	r4,r2
+
+nogorontrap:
+bl	getText
+mov	r1,r3
+mov	r2,#3
 b	buildText
 
 buildText:
@@ -70,10 +157,10 @@ bl	writeText
 mov	r7,r1
 
 @write the price to ram
-mov	r0,#0x2C
+mov	r0,#','
 strb	r0,[r7]
 add	r7,#1
-mov	r0,#0x20
+mov	r0,#' '
 strb	r0,[r7]
 add	r7,#1
 mov	r0,#0x02
@@ -86,31 +173,66 @@ cmp	r6,#0
 beq	is60
 cmp	r6,#1
 beq	is20
-b	is40
+cmp	r6,#2
+beq	is40
+cmp	r6,#3
+beq	pricefrommessage
+b	isFree
 is60:
-mov	r0,#0x36
+mov	r0,#'6'
 strb	r0,[r7]
-add	r7,#1
-mov	r0,#0x30
-strb	r0,[r7]
-add	r7,#1
+mov	r0,#'0'
+strb	r0,[r7, #1]
+add	r7,#2
 b	doneprice
 is20:
-mov	r0,#0x32
+mov	r0,#'2'
 strb	r0,[r7]
-add	r7,#1
-mov	r0,#0x30
-strb	r0,[r7]
-add	r7,#1
+mov	r0,#'0'
+strb	r0,[r7, #1]
+add	r7,#2
 b	doneprice
 is40:
-mov	r0,#0x34
+mov	r0,#'4'
 strb	r0,[r7]
-add	r7,#1
-mov	r0,#0x30
-strb	r0,[r7]
-add	r7,#1
+mov	r0,#'0'
+strb	r0,[r7, #1]
+add	r7,#2
 b	doneprice
+pricefrommessage:
+push	{r1-r4}
+ldr	r3,=#0x2000060
+ldr	r3,[r3]
+cmp	r3,#100
+blo	twodigits
+threedigits:
+mov	r0,r3
+mov	r1,#100
+svc	#6 @division
+add	r0,#'0'
+strb	r0,[r7]
+mov	r3,r1
+add	r7,#1
+twodigits:
+mov	r0,r3
+mov	r1,#10
+svc	#6 @division
+add	r0,#'0'
+strb	r0,[r7]
+add	r1,#'0'
+strb	r1,[r7, #1]
+add	r7,#2
+pop	{r1-r4}
+b	doneprice
+isFree:
+sub	r7, #4
+mov	r0, #'?'
+strb	r0, [r7]
+mov	r0,#0x0A
+strb	r0,[r7, #1]
+add	r7, #2
+b	donefree
+
 doneprice:
 mov	r0,#0x02
 strb	r0,[r7]
@@ -118,7 +240,7 @@ add	r7,#1
 mov	r0,#0x00
 strb	r0,[r7]
 add	r7,#1
-mov	r0,#0x2E
+mov	r0,#'.'
 strb	r0,[r7]
 add	r7,#1
 mov	r0,#0x0A
@@ -126,6 +248,7 @@ strb	r0,[r7]
 add	r7,#1
 
 @write the special line if any
+donefree:
 cmp	r5,#2
 blo	nospecial
 mov	r0,#0x28
@@ -153,10 +276,17 @@ strb	r0,[r7]
 add	r7,#1
 
 @write the buy text to ram
+cmp	r6,#3
+beq	goronbuy
 cmp	r6,#0
 beq	witchbuy
 ldr	r0,=#0x2901
 b	buytext
+goronbuy:
+ldr	r0,=#0x89DB8F4
+mov	r1,r7
+bl	writeText
+b	buydone
 witchbuy:
 ldr	r0,=#0x2D00
 buytext:
@@ -164,6 +294,7 @@ bl	getTextWrap
 mov	r1,r7
 bl	writeText
 mov	r7,r1
+buydone:
 pop	{r0-r7}
 b	end
 
@@ -193,6 +324,13 @@ cmp	r0,#0x1B
 bne	nottrap
 b	trap
 nottrap:
+cmp	r0,#0x1C
+blo	notBottle
+cmp	r0,#0x20
+blo	bottle
+notBottle:
+cmp	r0,#0x05
+beq	extra
 cmp	r0,#0x67
 beq	figurine
 cmp	r0,#0x18
@@ -222,6 +360,20 @@ blo	normal
 cmp	r0,#0x53
 bhi	normal
 b	dungeon
+
+bottle:
+cmp	r0, #0x20
+beq	normal
+ldr	r3,=#0x0400
+orr	r0,r3
+orr	r3, r1
+bx	lr
+
+extra:
+ldr	r0,extraText
+lsl	r1,#2
+ldr	r0,[r1, r0]
+bx	lr
 
 normal:
 ldr	r1,=#0x0400
@@ -319,7 +471,7 @@ b	normal
 kinstone:
 cmp	r1,#0x65
 blo	normal
-cmp	r1,#0x6D
+cmp	r1,#0x75
 bhi	normal
 cmp	r1,#0x65
 beq	tornado
@@ -339,7 +491,14 @@ cmp	r1,#0x6C
 beq	totem
 cmp	r1,#0x6D
 beq	crown
-b	normal
+
+commonkinstone:
+ldr	r0,kinstoneText
+sub	r1,#0x6E
+lsl	r1,#2
+ldr	r0,[r1, r0]
+bx	lr
+
 tornado:
 ldr	r3,=#0x71A
 b	normal
@@ -367,21 +526,43 @@ ldr	r0,[r0,r3]
 pop	{pc}
 
 trap:
-ldr	r0,=#0x3001160
+mov	r0,r4
 push	{lr}
 ldr	r3,trapGetIcon
 mov	lr,r3
 .short	0xF800
+@check if key/big key
+cmp	r0, #0x52
+beq	fakeKey
+cmp	r0, #0x53
+beq	fakeKey
+@check if it's in the list
+ldr	r2,progressiveTraps
+ldrb	r2, [r2, r0]
+cmp	r2, #0xFF
+beq	noExtra
+mov	r1, r2
+pop	{r0}
+mov	lr, r0
+mov	r3, #0
+b	extra
+noExtra:
 ldr	r1,=#0x0400
 orr	r0,r1
 mov	r3,#0
 pop	{pc}
 
+fakeKey:
+pop	{r1}
+mov	lr, r1
+ldr	r3, =#0x726
+b	normal
+
 .align
 .ltorg
 bottleScrubItem:
-@POIN bottleScrubItem
 @POIN gripScrubItem
+@POIN goronMerchantCustomSets
 @POIN getTextOffset
 @POIN shootbutterflyCredits
 @POIN digbutterflyCredits
@@ -394,3 +575,6 @@ bottleScrubItem:
 @POIN redclockCredits
 @POIN figurineCredits
 @POIN trapGetIcon
+@POIN extraText
+@POIN kinstoneText
+@POIN progressiveTraps

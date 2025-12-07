@@ -1,21 +1,323 @@
-// -----------------------------
-// Hard-coded options for v0.1.0
-// -----------------------------
-
-#define openFusions                         // Set every fusion as already done, should only be used with noFusions
-#define noFusions                           // Remove red, blue, and green kinstones. With openFusions makes fusion checks accessible from the beginning, without makes fusion checks inaccessible
-
-// #define requirementFigurinesAmmount 136  // 0-136
-// #define requirementSwordTier 5           // Don't require a sword to open DHC, don't define if 0, only 1-5
-#define requirementElementsAmmount 4        // Require 1-4 elements to open DHC
-
-// #define openDHC                          // DHC is open from the start, can be used with pedestalItems
-// #define pedestalItems                    // Randomizes pedestal items? Only applicable on openDHC
-// #define noDHC                            // Pulling from pedestal jumps to credits. Cannot be used with openDHC
-
-// #define glitchless                       // Controls whether things like ocarina glitch are enabled
-
+// ----------------------
+#define requirementPrizeItem 0x52
+#define requirementPrizeSub 0x1D
+#define fusionScrap00 0xF3
+#define fusionScrap01 0xF3
+#define fusionScrap02 0xF3
+#define fusionScrap03 0xF3
+#define fusionScrap04 0xF3
+#define fusionScrap05 0xF3
+#define fusionScrap06 0xF3
+#define fusionScrap07 0xF3
+#define fusionScrap08 0xF3
+#define fusionScrap09 0xF3
+#define fusionScrap0A 0xF3
+#define fusionScrap0B 0xF3
+#define fusionScrap0C 0xF3
+#define fusionScrap0D 0xF3
+#define fusionScrap0E 0xF3
+#define fusionScrap0F 0xF3
+#define fusionScrap10 0xF3
+#define fusionScrap11 0xF3
+#define DumShopKey11 0x53
+#define DumShopKey12 0x17
+#define DumShopKey21 0x53
+#define DumShopKey22 0x17
+#define DumShopKey31 0x53
+#define DumShopKey32 0x17
+#define DumShopKey41 0x53
+#define DumShopKey42 0x17
+#define DumShopKey51 0x53
+#define DumShopKey52 0x17
+#define DumShopKey61 0x53
+#define DumShopKey62 0x17
+#define DumShopKey71 0x53
+#define DumShopKey72 0x17
+#define DumShopKey81 0x53
+#define DumShopKey82 0x17
+#define DumShopKey91 0x53
+#define DumShopKey92 0x17
+#define DumShopKey101 0x53
+#define DumShopKey102 0x17
+#define DumShopKey111 0x53
+#define DumShopKey112 0x17
+#define DumShopKey121 0x53
+#define DumShopKey122 0x17
+#define DumShopKey131 0x53
+#define DumShopKey132 0x17
+#define DumShopKey141 0x53
+#define DumShopKey142 0x17
+#define DumShopKey151 0x53
+#define DumShopKey152 0x17
+#define DumShopKey161 0x53
+#define DumShopKey162 0x17
+#define DumShopKey171 0x53
+#define DumShopKey172 0x17
+#define DumShopKey181 0x53
+#define DumShopKey182 0x17
+#define DumShopKey191 0x53
+#define DumShopKey192 0x17
+#define DumShopKey201 0x53
+#define DumShopKey202 0x17
+#define DumShopKey211 0x53
+#define DumShopKey212 0x17
+#define DumShopKey221 0x53
+#define DumShopKey222 0x17
+#define DumShopKey231 0x53
+#define DumShopKey232 0x17
+#define DumShopKey241 0x53
+#define DumShopKey242 0x17
+#define DumShopKey251 0x53
+#define DumShopKey252 0x17
+#define DumShopKey261 0x53
+#define DumShopKey262 0x17
+#define DumShopKey271 0x53
+#define DumShopKey272 0x17
+#define DumShopKey281 0x53
+#define DumShopKey282 0x17
+#define walletShopItem 0x3E
+#define walletShopSub 0x00
+#define boomerangShopItem 0x4F
+#define boomerangShopSub 0x00
+#define quiverShopItem 0x57
+#define quiverShopSub 0x00
+#define bombBagShopItem 0x6F
+#define bombBagShopSub 0x00
+#define dogShopItem 0x5E
+#define dogShopSub 0x00
+#define goron1LeftItem 0x6D
+#define goron1LeftSub 0x00
+#define goron1MiddleItem 0x5D
+#define goron1MiddleSub 0x00
+#define goron1RightItem 0x5E
+#define goron1RightSub 0x00
+#define goron2LeftItem 0x6F
+#define goron2LeftSub 0x00
+#define goron2MiddleItem 0x54
+#define goron2MiddleSub 0x00
+#define goron2RightItem 0x57
+#define goron2RightSub 0x00
+#define goron3LeftItem 0x6E
+#define goron3LeftSub 0x00
+#define goron3MiddleItem 0x6E
+#define goron3MiddleSub 0x00
+#define goron3RightItem 0x5D
+#define goron3RightSub 0x00
+#define goron4LeftItem 0x5F
+#define goron4LeftSub 0x00
+#define goron4MiddleItem 0x56
+#define goron4MiddleSub 0x00
+#define goron4RightItem 0x6E
+#define goron4RightSub 0x00
+#define goron5LeftItem 0x6E
+#define goron5LeftSub 0x00
+#define goron5MiddleItem 0x5E
+#define goron5MiddleSub 0x00
+#define goron5RightItem 0x59
+#define goron5RightSub 0x00
+#define swiftblade1DojoItem 0x05
+#define swiftblade1DojoSub 0x04
+#define swiftblade2DojoItem 0x72
+#define swiftblade2DojoSub 0x00
+#define swiftblade3DojoItem 0x57
+#define swiftblade3DojoSub 0x00
+#define swiftblade4DojoItem 0x05
+#define swiftblade4DojoSub 0x00
+#define carlovSpotItem 0x05
+#define carlovSpotSub 0x01
+#define redBookItem 0x5F
+#define redBookSub 0x00
+#define greenBookItem 0x5E
+#define greenBookSub 0x00
+#define greatbladeDojoItem 0x5E
+#define greatbladeDojoSub 0x00
+#define golden5Item 0x56
+#define golden5Sub 0x00
+#define grimbladeDojoItem 0x56
+#define grimbladeDojoSub 0x00
+#define DumDHCENT11 0xF0
+#define DumDHCENT12 0x07
+#define DumDHCENT21 0xF0
+#define DumDHCENT22 0x08
+#define golden4Item 0x57
+#define golden4Sub 0x00
+#define splitbladeDojoItem 0x5E
+#define splitbladeDojoSub 0x00
+#define DumToDENT 0xF0
+#define DumToDENT2 0x04
+#define wavebladeDojoItem 0x65
+#define wavebladeDojoSub 0x00
+#define blueBookItem 0x05
+#define blueBookSub 0x00
+#define golden8Item 0x5D
+#define golden8Sub 0x00
+#define DumDWSENT 0xF0
+#define DumDWSENT2 0x01
+#define bottleScrubItem 0x63
+#define bottleScrubSub 0x00
+#define golden9Item 0x56
+#define golden9Sub 0x00
+#define golden2Item 0x6D
+#define golden2Sub 0x00
+#define golden7Item 0x6F
+#define golden7Sub 0x00
+#define gripScrubItem 0x5E
+#define gripScrubSub 0x00
+#define graybladeDojoItem 0x56
+#define graybladeDojoSub 0x00
+#define DumCoFENT 0xF0
+#define DumCoFENT2 0x02
+#define golden3Item 0x58
+#define golden3Sub 0x00
+#define scarbladeDojoItem 0x55
+#define scarbladeDojoSub 0x00
+#define swiftbladeIDojoItem 0x54
+#define swiftbladeIDojoSub 0x00
+#define golden1Item 0x57
+#define golden1Sub 0x00
+#define DumFoWENT 0xF0
+#define DumFoWENT2 0x03
+#define DumRCENT 0xF0
+#define DumRCENT2 0x05
+#define golden6Item 0x57
+#define golden6Sub 0x00
+#define biggoronItem 0x6F
+#define biggoronSub 0x00
+#define DumPoWENT 0xF0
+#define DumPoWENT2 0x06
+#define chuContainerItem 0x53
+#define chuContainerSub 0x18
+#define gleerokContainerItem 0x05
+#define gleerokContainerSub 0x02
+#define fowLeftItem 0x64
+#define fowLeftSub 0x00
+#define fowRightItem 0x53
+#define fowRightSub 0x1A
+#define mazaalContainerItem 0x6D
+#define mazaalContainerSub 0x00
+#define DumToD1 0xF2
+#define DumToD12 0x0B
+#define DumToD2 0xF2
+#define DumToD22 0x0A
+#define octoContainerItem 0x50
+#define octoContainerSub 0x1B
+#define gyorgContainerItem 0x63
+#define gyorgContainerSub 0x00
+#define pedestalSpot1Item 0x5F
+#define pedestalSpot1Sub 0x00
+#define pedestalSpot2Item 0x6C
+#define pedestalSpot2Sub 0x00
+#define pedestalSpot3Item 0x55
+#define pedestalSpot3Sub 0x00
+#define customRNG 0x7C20FA23
+#define versionNumber 0x010000FF
+#define versionNumbers 0x010000FF
+#define TUNIC_COLORED
+#define TUNIC_COLOR_DARKEST 0x15E2
+#define TUNIC_COLOR_DARK 0x1688
+#define TUNIC_COLOR_MAIN 0x07E2
+#define TUNIC_COLOR_LIGHT 0x53F7
+#define heartscolor
+#define heartFillR (0x195F & 0x1F)
+#define heartFillG ((0x195F >> 5) & 0x1F)
+#define heartFillB ((0x195F >> 10) & 0x1F)
+#define heartEdgeR (0x7FFF & 0x1F)
+#define heartEdgeG ((0x7FFF >> 5) & 0x1F)
+#define heartEdgeB ((0x7FFF >> 10) & 0x1F)
+#define lowHealthBeep 90
+#define barcolor
+#define splitFirst 0x0FE9
+#define splitThird 0x0E66
+#define splitFourth 0x0D46
+#define guaranteedBarlov
+#define instantText
+//#define historyOption 0x180
 #define allowHomewarp
+#define itemsCanCollectItems
+#define crenelCrest 0x00
+#define fallsCrest 0x00
+#define cloudCrest 0x00
+#define townCrest 0x08
+#define lakeCrest 0x10
+#define swampCrest 0x00
+#define southCrest 0x00
+#define minishCrest 0x00
+#define dwsBluePortal 0x00
+#define dwsRedPortal 0x00
+#define cofBluePortal 0x00
+#define cofRedPortal 0x00
+#define fowBluePortal 0x00
+#define fowRedPortal 0x00
+#define todBluePortal 0x00
+#define todRedPortal 0x00
+#define powBluePortal 0x00
+#define powRedPortal 0x00
+#define dhcBluePortal 0x00
+#define dhcRedPortal 0x00
+#define specialPots
+#define kinstonePots
+#define kinstoneDig
+#define kinstoneWater
+#define lakeHPWater
+#define todKeyWater
+#define mC81 0x00
+#define kinstoneMultiplierGoldCloud 1
+#define kinstoneMultiplierGoldSwamp 1
+#define kinstoneMultiplierGoldFalls 1
+#define mCBF 0x00
+#define noRedFusions
+#define kinstoneMultiplierRedW 0
+#define kinstoneMultiplierRedV 0
+#define kinstoneMultiplierRedE 0
+#define mC83 0x00
+#define mC84 0x00
+#define noBlueFusions
+#define kinstoneMultiplierBlueL 0
+#define kinstoneMultiplierBlueS 0
+#define mC86 0x00
+#define noGreenFusions
+#define kinstoneMultiplierGreenC 0
+#define kinstoneMultiplierGreenG 0
+#define kinstoneMultiplierGreenP 0
+#define mC88 0x00
+#define mC89 0x00
+#define mC8A 0x00
+#define mC8B 0x00
+#define mC8C 0x00
+#define mC8D 0x00
+#define mC82 0x00
+#define mC85 0x00
+#define mC87 0x00
+#define bootsOnL
+#define goalHintNutOrElement
+#define ocarinaOnSelect
+#define removeFickleness
+#define instantFusionReload
+#define alwaysSkipFusionCutscene 0
+#define skipFusionCutsceneShowMap 0
+#define disableKinstoneDrops
+#define disableShellDrops
+#define bookTraps
+#define keyMultiplierDWS 1
+#define keyMultiplierCOF 1
+#define keyMultiplierFOW 1
+#define keyMultiplierTOD 1
+#define keyMultiplierRC 1
+#define keyMultiplierPOW 1
+#define keyMultiplierDHC 1
+#define heartTraps
+#define requirementSwordTier 5
+#define requirementSwordName5
+#define requirementElementsAmount 4
+#define requirementPrize
+//#define openDHC
+#define seededSharedFusions
+#define counterOption
+#define enableBombBagShopItem
+//#define goronMerchantCustomSets 0
+//#define seedHashed 0xB22CA58F
+//#define settingHash 0x958678B6
+
 
 // -----------------------------------------
 // Dedicated placements for randomized items
@@ -51,24 +353,28 @@
 #define itemStockwell300Item	$FF0073 // Boomerang
 #define itemStockwell600Item	$FF0093 // Quiver
 #define itemStockwellBackItem	$FF00B3 // Dog Food
+#define itemStockwellBombItem	$FF00D3 // Bomb Bag
 
-#define goron1Left		$FF00D0
-#define goron1Middle		$FF00D2
-#define goron1Right		$FF00D4
-//spacer			$FF00D6
-#define goron2Left		$FF00D8
-#define goron2Middle		$FF00DA
-#define goron2Right		$FF00DC
-//spacer			$FF00DE
-#define goron3Left		$FF00E0
-#define goron3Middle		$FF00E2
-#define goron3Right		$FF00E4
+#define goron1Left		$FF00E0
+#define goron1Middle		$FF00E2
+#define goron1Right		$FF00E4
 //spacer			$FF00E6
-#define goron4Left		$FF00E8
-#define goron4Middle		$FF00EA
-#define goron4Right		$FF00EC
+#define goron2Left		$FF00E8
+#define goron2Middle		$FF00EA
+#define goron2Right		$FF00EC
 //spacer			$FF00EE
-#define goron5Left		$FF00F0
-#define goron5Middle		$FF00F2
-#define goron5Right		$FF00F4
-#define goronMerchantCustomSets	$FF00F6
+#define goron3Left		$FF00F0
+#define goron3Middle		$FF00F2
+#define goron3Right		$FF00F4
+//spacer			$FF00F6
+#define goron4Left		$FF00F8
+#define goron4Middle		$FF00FA
+#define goron4Right		$FF00FC
+//spacer			$FF00FE
+#define goron5Left		$FF0100
+#define goron5Middle		$FF0102
+#define goron5Right		$FF0104
+#define goronMerchantCustomSets	$FF0106
+
+// golden enemies follow the pattern (area, room, itemId, subId, flag)
+#define goldenDropTable		$FF0110

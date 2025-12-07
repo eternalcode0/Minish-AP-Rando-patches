@@ -44,11 +44,11 @@ ALIGN 4
 multiValueCheck:
 WORD 0x03004028; BYTE 0x0 0x1 0x2 0x3 0x4 0x5 0x7 0x9 0x19 0x1A; BYTE 0xFF
 
-// add ap item handler, hooks into PlayerNormal handler so it only runs when Link's Action State is 1
-PUSH; ORG $701D4; jumpToHack(apItem); POP
+// add multiworld item handler, hooks into PlayerNormal handler so it only runs when Link's Action State is 1
+PUSH; ORG $701D4; jumpToHack(mwReceive); POP
 ALIGN 4
-apItem:
-#incbin "asm/apItem.dmp"
+mwReceive:
+#incbin "asm/mwReceive.dmp"
 POIN idsGiveItem
 POIN idsSetInventory
 WORD AP_ITEM_ADDR
@@ -77,6 +77,7 @@ BYTE 0x6C // 10 Bombs
 BYTE 0x6D // 30 Bombs
 BYTE 0x6E // 10 Arrows
 BYTE 0x6F // 30 Arrows
+BYTE 0x67 // Figurine
 BYTE 0xFF // TERMINATOR
 
 // This list can't use any items that set flags on pickup like those in the

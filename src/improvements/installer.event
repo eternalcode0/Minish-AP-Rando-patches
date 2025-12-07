@@ -1,7 +1,42 @@
-#ifndef neverSkipFusionCutscene //define to never skip
-	#ifndef alwaysSkipFusionCutscene
-		#define alwaysSkipFusionCutscene 0 //set to non-0 to skip, set to 0 to skip on button held
-	#endif
+#ifndef alwaysSkipFusionCutscene
+	#define alwaysSkipFusionCutscene 0
+#endif
+#ifndef skipFusionCutsceneShowMap
+	#define skipFusionCutsceneShowMap 0
+#endif
+
+#ifndef kinstoneMultiplierGoldCloud
+	#define kinstoneMultiplierGoldCloud 1
+#endif
+#ifndef kinstoneMultiplierGoldSwamp
+	#define kinstoneMultiplierGoldSwamp 1
+#endif
+#ifndef kinstoneMultiplierGoldFalls
+	#define kinstoneMultiplierGoldFalls 1
+#endif
+#ifndef kinstoneMultiplierRedW
+	#define kinstoneMultiplierRedW 1
+#endif
+#ifndef kinstoneMultiplierRedV
+	#define kinstoneMultiplierRedV 1
+#endif
+#ifndef kinstoneMultiplierRedE
+	#define kinstoneMultiplierRedE 1
+#endif
+#ifndef kinstoneMultiplierBlueL
+	#define kinstoneMultiplierBlueL 1
+#endif
+#ifndef kinstoneMultiplierBlueS
+	#define kinstoneMultiplierBlueS 1
+#endif
+#ifndef kinstoneMultiplierGreenC
+	#define kinstoneMultiplierGreenC 1
+#endif
+#ifndef kinstoneMultiplierGreenG
+	#define kinstoneMultiplierGreenG 1
+#endif
+#ifndef kinstoneMultiplierGreenP
+	#define kinstoneMultiplierGreenP 1
 #endif
 
 //remove all ezlo stepping triggers
@@ -10,26 +45,35 @@ ALIGN 4
 ezloPleaseStop:
 #incbin "asm/ezloPleaseStop.dmp"
 
-//instant text
-PUSH; ORG $562AC; SHORT 0x2501; POP
+#ifdef instantText
+	//instant text
+	PUSH; ORG $562AC; SHORT 0x2501; POP
 
-//holding = mashing for text
-PUSH; ORG $566B2; SHORT 0x8801; POP
-PUSH; ORG $56726; SHORT 0x8801; POP
+	//holding = mashing for text
+	PUSH; ORG $566B2; SHORT 0x8801; POP
+	PUSH; ORG $56726; SHORT 0x8801; POP
+#endif
 
-//skip fusion cutscene if A, B or START are held
+//skip fusion cutscene if A, B or START are held (or always)
 #ifndef neverSkipFusionCutscene
 	PUSH; ORG $A35E4; jumpToHack(skipFusionCutscene); POP
 	ALIGN 4
 	skipFusionCutscene:
 	#incbin "asm/skipFusionCutscene.dmp"
 	WORD alwaysSkipFusionCutscene //set to non-0 to always skip fusion cutscene
+	WORD skipFusionCutsceneShowMap //set to non-0 to show map after skipped cutscene
 #endif
 
 //skip minish transformation cutscenes automatically
 PUSH; ORG $70DFA; SHORT 0; POP
 
+#ifdef ocarinaOnSelect
+	//can't talk to ezlo with Select
+	PUSH; ORG $5270A; SHORT 0x4280; POP
+#endif
+
 //pressing L uses pegasus boots, if owned
+//pressing Select uses the ocarina, if owned
 PUSH; ORG $772AC; jumpToHack(pegasusShortcut1); POP
 ALIGN 4
 pegasusShortcut1:
@@ -37,12 +81,32 @@ pegasusShortcut1:
 POIN ($772AC+0x08)|1 //return offset if false
 POIN ($772AC+0x2C)|1 //return offset if true
 POIN $778C4 //something about buttons
+#ifdef bootsOnL
+	WORD 1
+#else
+	WORD 0
+#endif
+#ifdef ocarinaOnSelect
+	WORD 1
+#else
+	WORD 0
+#endif
 PUSH; ORG $77950; jumpToHack(pegasusShortcut2); POP
 ALIGN 4
 pegasusShortcut2:
 #incbin "asm/pegasusShortcut2.dmp"
 POIN ($77950+0x08)|1 //return offset if false
 POIN ($77950+0x26)|1 //return offset if true
+#ifdef bootsOnL
+	WORD 1
+#else
+	WORD 0
+#endif
+#ifdef ocarinaOnSelect
+	WORD 1
+#else
+	WORD 0
+#endif
 
 //no wait when visiting a new area
 PUSH; ORG $52D64; SHORT 0xE006; POP
@@ -56,7 +120,7 @@ pausefreedom:
 
 //adding some stuff that's missing from vanilla eur
 //missing lon lon tornado
-PUSH; ORG $F7188; POIN lonlontornado; POP
+PUSH; ORG $F6E60; BYTE 0x0F; ORG $F7188; POIN lonlontornado; POP
 ALIGN 4
 lonlontornado:
 BYTE 0x5E 0 0 1; SHORT 0x188 0x078 0 0 0 0xFFFF
@@ -155,11 +219,24 @@ ALIGN 4
 spinSoldier:
 #incbin "asm/spinSoldier.dmp"
 
-//boomerang can no longer grab golden kinstones
-PUSH; ORG $80A18; jumpToHack(boomerangFix); POP
-ALIGN 4
-boomerangFix:
-#incbin "asm/boomerangFix.dmp"
+#ifndef itemsCanCollectItems
+	//boomerang, gust jar and sword can no longer grab golden (or any) kinstones
+	PUSH; ORG $80A18; jumpToHack(boomerangFix); POP
+	ALIGN 4
+	boomerangFix:
+	#incbin "asm/boomerangFix.dmp"
+	#ifdef fastKinstones
+		WORD 0x6D
+	#else
+		WORD 0x75
+	#endif
+#else
+	//boomerang, gust jar and sword can grab any item
+	PUSH
+	ORG $80A14
+	BYTE 0x17
+	POP
+#endif
 
 //sword techniques are unlocked instantly
 PUSH; ORG $83618; jumpToHack(scrollFix); POP
@@ -188,7 +265,7 @@ PUSH; ORG $E2F51; BYTE 0xFE
 ORG $9C8F4; WORD 0xFECEF7E3
 ORG $9C9B8; WORD 0xFE6CF7E3
 ORG $9C7B8; jumpToHack(birdFix1)
-ORG $A2058; jumpToHack(birdFix2)
+ORG $A2058; jumpToHack(birdFix2) //also fixes graphics for king item and biggoron item
 ORG $9C844; jumpToHack(birdFix3)
 ORG $9C94E; SHORT 0x20FE 0x73A0; POP
 ALIGN 4
@@ -197,6 +274,7 @@ birdFix1:
 ALIGN 4
 birdFix2:
 #incbin "asm/birdFix2.dmp"
+POIN trapGetIcon
 ALIGN 4
 birdFix3:
 #incbin "asm/birdFix3.dmp"
@@ -261,6 +339,13 @@ BYTE 0x32
 BYTE 0x33
 BYTE 0 //terminator
 
+//make the tingle tree torches work when lantern is used on them
+PUSH
+ORG $F7B07; BYTE 4
+ORG $F7B17; BYTE 4
+ORG $F7B27; BYTE 4
+ORG $F7B37; BYTE 4
+POP
 //make the dws torches work when the lantern is used on them
 PUSH
 ORG $DE973; BYTE 4
@@ -307,15 +392,46 @@ escapeWalls:
 #incbin "asm/escapeWalls.dmp"
 
 //normal kinstones have no popups
-PUSH; ORG $80DF4; jumpToHack(fastKinstone); POP
-ALIGN 4
-fastKinstone:
-#incbin "asm/fastKinstone.dmp"
-
-//normal kinstones don't get added to the bag in nofusions
-#ifdef noFusions
-	PUSH; ORG $1E778; SHORT 0x2C00 0xD025 0x2C6D; POP
+#ifdef fastKinstones
+	PUSH; ORG $80DF4; jumpToHack(fastKinstone); POP
+	ALIGN 4
+	fastKinstone:
+	#incbin "asm/fastKinstone.dmp"
 #endif
+
+//10 or 30 bombs or arrows have no popups
+PUSH
+ORG $FCE5B; BYTE 0x00
+ORG $FCE63; BYTE 0x00
+ORG $FCE6B; BYTE 0x00
+ORG $FCE73; BYTE 0x00
+POP
+
+//kinstone multipliers (how many are added to the bag when collected)
+//value 0 means kinstones don't get added to the bag (used with removed or open fusions)
+PUSH; ORG $1E7AC; jumpToHack(kinstoneBagMultiplier); POP
+ALIGN 4
+kinstoneBagMultiplier:
+#incbin "asm/kinstoneBagMultiplier.dmp"
+POIN kinstoneBagMultiplierTable
+kinstoneBagMultiplierTable:
+BYTE kinstoneMultiplierGoldCloud
+BYTE kinstoneMultiplierGoldCloud
+BYTE kinstoneMultiplierGoldCloud
+BYTE kinstoneMultiplierGoldCloud
+BYTE kinstoneMultiplierGoldCloud
+BYTE kinstoneMultiplierGoldSwamp
+BYTE kinstoneMultiplierGoldSwamp
+BYTE kinstoneMultiplierGoldSwamp
+BYTE kinstoneMultiplierGoldFalls
+BYTE kinstoneMultiplierRedW
+BYTE kinstoneMultiplierRedV
+BYTE kinstoneMultiplierRedE
+BYTE kinstoneMultiplierBlueL
+BYTE kinstoneMultiplierBlueS
+BYTE kinstoneMultiplierGreenC
+BYTE kinstoneMultiplierGreenG
+BYTE kinstoneMultiplierGreenP
 
 //elements at cloud tops are only drawn if looking at the top layer
 PUSH; ORG $A611C; jumpToHack(cloudsElements); POP
@@ -366,11 +482,13 @@ ALIGN 4
 quickwarpText:
 #incbin "asm/quickwarpText.dmp"
 
-//hold button to skip through choices, like regular dialogues
-PUSH; ORG $5655C; jumpToHack(skipChoice); POP
-ALIGN 4
-skipChoice:
-#incbin "asm/skipChoice.dmp"
+#ifdef instantText
+	//hold button to skip through choices, like regular dialogues
+	PUSH; ORG $5655C; jumpToHack(skipChoice); POP
+	ALIGN 4
+	skipChoice:
+	#incbin "asm/skipChoice.dmp"
+#endif
 
 //skip darknut spawning cutscene in dhc
 PUSH; ORG $E672; SHORT 0; POP
@@ -428,6 +546,7 @@ smallShopsText:
 #incbin "asm/smallShopsText.dmp"
 POIN itemTrilbyScrub
 POIN itemCrenelScrub
+POIN goronMerchantCustomSets
 POIN getTextOffset
 POIN shootbutterflyCredits
 POIN digbutterflyCredits
@@ -440,6 +559,9 @@ POIN blueclockCredits
 POIN redclockCredits
 POIN figurineCredits
 POIN trapGetIcon
+POIN extraText
+POIN kinstoneText
+POIN progressiveTraps
 
 //skip big chu cutscenes
 PUSH; ORG $4CA20; SHORT 0xE014; POP
@@ -456,10 +578,6 @@ PUSH; ORG $83620; SHORT 0x2844; POP
 
 //faster textbox opening and closing
 PUSH; ORG $5615A; SHORT 0x2008; ORG $5619C; SHORT 0x2008; POP
-
-ALIGN 4
-spawnPoint:
-BYTE 0x22 /*area*/ 0x15 /*room*/ 4 /*facing direction*/ 0 /*transition type*/; SHORT 0x58 /*x*/ 0x38 /*y*/
 
 //warp home after sleep mode
 #ifdef allowHomewarp
@@ -498,8 +616,8 @@ BYTE 0x22 /*area*/ 0x15 /*room*/ 4 /*facing direction*/ 0 /*transition type*/; S
 	String("Faire une sieste?"); BYTE 0x0A 0x0A 0x06 0x01
 	String(" Oui      "); BYTE 0x06 0x02
 	String(" Non"); BYTE 0x0A 0x0A
-	String("Cela vous ram"); BYTE 0xC9; String("nera "); BYTE 0xE1; String(" la maison"); BYTE 0x0A
-	String("et y d"); BYTE 0xC9; String("finira votre point Quickwarp."); BYTE 0x00
+	String("Cela vous ram"); BYTE 0xE8; String("nera chez vous et"); BYTE 0x0A
+	String("fixera votre Quickwarp "); BYTE 0xE0; String(" cet endroit."); BYTE 0x00
 	homeWarpGerman:
 	String("Schlafen gehen?"); BYTE 0x0A 0x0A 0x06 0x01
 	String(" Ja       "); BYTE 0x06 0x02
@@ -513,20 +631,103 @@ BYTE 0x22 /*area*/ 0x15 /*room*/ 4 /*facing direction*/ 0 /*transition type*/; S
 	String("Ser"); BYTE 0xE1; String("s teletransportado a casa y se"); BYTE 0x0A
 	String("pondr"); BYTE 0xE1; String(" tu punto de Quickwarp all"); BYTE 0xED ;String("."); BYTE 0x00
 	homeWarpItalian:
-	String("Take a nap?"); BYTE 0x0A 0x0A 0x06 0x01
-	String(" Yes      "); BYTE 0x06 0x02
+	String("Fare un pisolino?"); BYTE 0x0A 0x0A 0x06 0x01
+	String(" S"); BYTE 0xED; String("       "); BYTE 0x06 0x02
 	String(" No"); BYTE 0x0A 0x0A
 	String("This will warp you back home and"); BYTE 0x0A
 	String("set your Quickwarp point there."); BYTE 0x00
 #endif
 
+//fix charm palette allocation
+PUSH; ORG $1D084; jumpToHack(charmFix1); POP
+ALIGN 4
+charmFix1:
+#incbin "asm/charmFix1.dmp"
+PUSH; ORG $1D120; jumpToHack(charmFix2); POP
+ALIGN 4
+charmFix2:
+#incbin "asm/charmFix2.dmp"
+
+//swap the entity crates at the cafe for background versions of them
+//first we remove them
+//PUSH
+//ORG $F4FCC
+//BYTE 0x16 0x0F 0x4E 0x00; SHORT 0x800 0 0x48 0x28 0 0
+//BYTE 0x16 0x0F 0x4E 0x00; SHORT 0x902 0 0x38 0xB0 0 0
+//BYTE 0x16 0x0F 0x4E 0x00; SHORT 0xA01 0 0xD0 0x48 0 0
+//BYTE 0x06 0x00 0x38 0x58; SHORT 0x000 0 0xC0 0x8E 0 0
+//BYTE 0xFF
+//POP
+////and now we include the new map
+//PUSH
+//ORG 1064732
+//WORD cafe-3293164+$0
+//ORG currentoffset+4
+//WORD $800003FC
+//POP
+//ALIGN 4
+//cafe:
+//#incbin "cafe.bin"
+
+//make all fusers non-fickle
+#ifdef removeFickleness
+	PUSH
+	ORG $1EA54
+	SHORT 0xE006 //always offer fusion instead of random
+	POP
+#endif
+
+//shared fusions are done in a fixed order
+#ifdef seededSharedFusions
+	PUSH
+	ORG $1EA80
+	SHORT 0x2500 //start at index 0 instead of random
+	//vanilla data:
+	//ORG $1EA98
+	//POIN sharedFusions
+	//ORG $C9844
+	//sharedFusions:
+	//BYTE 0x18 0x2D 0x35 0x36 0x37 0x39 0x3C 0x44 0x46
+	//BYTE 0x47 0x4E 0x50 0x53 0x55 0x56 0x58 0x5F 0x60
+	POP
+#endif
+
+//allow 0xF2 placeholders in shared fusion list
+PUSH; ORG $1EA88; jumpToHack(sharedFusionPlaceholders); POP
+ALIGN 4
+sharedFusionPlaceholders:
+#incbin "asm/sharedFusionPlaceholders.dmp"
+
+//selecting "No" in ocarina menu doesn't close the menu
 PUSH
-ORG $113A14
-BYTE 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-BYTE 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-BYTE 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ORG $A65D8
+SHORT 0x2001 //mov r0,#1
+SHORT 0xE004 //b #0x080A65E6
+POP
+
+//every how many frames the low health beep plays
+#ifndef lowHealthBeep
+	#define lowHealthBeep "90"
+#endif
+PUSH
+ORG $1711E
+BYTE lowHealthBeep
+POP
+
+//guard moves when entering town from behind him
+PUSH; ORG $4DBA8; jumpToHack(loadTown); POP
+ALIGN 4
+loadTown:
+#incbin "asm/loadTown.dmp"
+
+//bell doesn't require screen transition after obtaining cape
+PUSH
+ORG $4DD7E
+SHORT 0x46C0
 POP
 
 #include "glitchless.event"
 #include "dungeon.event"
 #include "fairy.event"
+#include "bigOctorok.event"
+#include "barlov.event"

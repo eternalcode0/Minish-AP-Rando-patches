@@ -39,7 +39,6 @@ ALIGN 4
 pedestalPull:
 #incbin "asm/pedestalPull.dmp"
 POIN requirementTable
-POIN defaultRequirement
 POIN pedestalearth
 POIN pedestalfire
 POIN pedestalwater
@@ -70,9 +69,7 @@ ALIGN 4
 requirementTable:
 POIN requirementElementsASM
 POIN requirementSwordTierASM
-#ifdef requirementFigurinesAmmount
 POIN requirementFigurinesASM
-#endif
 POIN requirementDungeonsASM
 WORD 0 //terminator
 
@@ -88,14 +85,13 @@ requirementSwordTierASM:
 POIN OptionsSpace | 2
 PUSH; ORG OptionsSpace | 2; BYTE 0; POP
 
-#ifdef requirementFigurinesAmmount
 ALIGN 4
 requirementFigurinesASM:
 #incbin "asm/pedestalRequirements/requirementFigurinesASM.dmp"
-WORD requirementFigurinesAmmount
+POIN OptionsSpace | 4
 requirementFigurinesCounter:
 #incbin "asm/pedestalRequirements/requirementFigurinesCounter.dmp"
-#endif
+PUSH; ORG OptionsSpace | 4; BYTE 0; POP
 
 ALIGN 4
 requirementDungeonsASM:
@@ -156,3 +152,13 @@ PUSH
 ORG $5A4510
 #incbin "dhcBlocker.pal.bin"
 POP
+
+#ifdef pedestalItems
+	//skip rumbling and camera scrolling after pedestal pulls
+	PUSH
+	ORG $13AEC
+	BYTE 0x20 0x00
+	ORG $13AFE
+	BYTE 0x03 0x08 0x72 0x00
+	POP
+#endif

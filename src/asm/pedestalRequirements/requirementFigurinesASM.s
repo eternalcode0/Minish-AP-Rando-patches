@@ -1,6 +1,7 @@
 .thumb
 @check figurine count
 ldr	r0,figurines
+ldrb	r0,[r0]
 ldr	r1,=#0x2002AF0
 ldrb	r1,[r1]
 cmp	r0,r1

@@ -1,28 +1,54 @@
 .thumb
+@check if this is a scroll
+cmp	r6, #0x75
+bhi	checkBottle
+cmp	r6, #0x70
+bhs isScroll2
+cmp	r6, #0x48
+blo	checkBottle
+cmp	r6, #0x4F
+bhi	checkBottle
+
+isScroll1:
+mov	r0, r8
+mov	r1, #18
+add	r1, r6
+sub	r1, #0x48
+b	register
+
+isScroll2:
+mov	r0, r8
+mov	r1, #26
+add	r1, r6
+sub	r1, #0x70
+b	register
+
+@check if this is a bottle
 checkBottle:
 cmp	r6, #0x1C
 blo	notBottle
 cmp	r6, #0x1F
 bhi	notBottle
 
-@bottle found
+@its a bottle: we get funky
 cmp	r7,#0
 bne	bottleWithSub
+@if no sub id set, treat as empty
 mov	r7,#0x20
 
 bottleWithSub:
 ldr	r0, =#0x30011E8
-@display the correct icon
+@change the icon we will get
 strb	r7, [r0, #0x0A]
 mov	r1, #0
 strb	r1, [r0, #0x0B]
-@get text for the correct item
+@get text for the corresponding item
 ldr	r0, =#0x500
 add	r0, r7
 b	return
 
-notBottle:
 @check if this is a figurine
+notBottle:
 cmp	r6,#0x67
 beq	figurine
 
@@ -60,31 +86,66 @@ b	end
 
 dws:
 ldr	r0,=#0x720
-b	return
+cmp	r6, #0x52
+blo	return
+mov	r1, #4
+add	r1, r6
+sub	r1, #0x52
+b	register
 
 cof:
 ldr	r0,=#0x721
-b	return
+cmp	r6, #0x52
+blo	return
+mov	r1, #6
+add	r1, r6
+sub	r1, #0x52
+b	register
 
 fow:
 ldr	r0,=#0x722
-b	return
+cmp	r6, #0x52
+blo	return
+mov	r1, #8
+add	r1, r6
+sub	r1, #0x52
+b	register
 
 tod:
 ldr	r0,=#0x723
-b	return
+cmp	r6, #0x52
+blo	return
+mov	r1, #10
+add	r1, r6
+sub	r1, #0x52
+b	register
 
 pow:
 ldr	r0,=#0x725
-b	return
+cmp	r6, #0x52
+blo	return
+mov	r1, #12
+add	r1, r6
+sub	r1, #0x52
+b	register
 
 dhc:
 ldr	r0,=#0x727
-b	return
+cmp	r6, #0x52
+blo	return
+mov	r1, #14
+add	r1, r6
+sub	r1, #0x52
+b	register
 
 rc:
 ldr	r0,=#0x724
-b	return
+cmp	r6, #0x52
+blo	return
+mov	r1, #16
+add	r1, r6
+sub	r1, #0x52
+b	register
 
 kinstone:
 cmp	r7,#0x65
@@ -105,18 +166,44 @@ cmp	r7,#0x6C
 beq	totem
 cmp	r7,#0x6D
 beq	crown
-b	end
+
+commonKinstone:
+mov	r0, r8
+mov	r1, r7
+sub	r1, #0x6E-32
+b	register
 
 tornado:
 ldr	r0,=#0x71A
-b	return
+mov	r1, #1
+b	register
 
 totem:
 ldr	r0,=#0x70D
-b	return
+mov	r1, #2
+b	register
 
 crown:
 ldr	r0,=#0x717
+mov	r1, #3
+b	register
+
+register:
+push	{r0-r4}
+ldr	r0, =#0x203F300
+mov	r4, #12 + 1
+ldr	r2, [r0]
+add	r0, #4
+registerLoop:
+	ldr	r3, [r0]
+	str	r2, [r0]
+	mov	r2, r3
+	add	r0, #4
+	sub	r4, #1
+bne	registerLoop
+ldr	r0, =#0x203F300
+str	r1, [r0]
+pop	{r0-r4}
 b	return
 
 end:

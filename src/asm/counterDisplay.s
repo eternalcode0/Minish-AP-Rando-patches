@@ -1,12 +1,14 @@
 .equ timer, drawNumber+4
-.equ target, timer+4
+.equ history, timer+4
+.equ target, history+4
 .equ counter, target+4
 .thumb
 and	r0,r1
 mov	r6,r2
 push	{r0-r7}
-@check if we have a counter routine
-ldr	r0,counter
+@check if we have a target amount
+ldr	r0,target
+ldrb	r0,[r0]
 cmp	r0,#0
 beq	end
 
@@ -71,6 +73,7 @@ mov	lr,r3
 mov	r3,r7
 add	r3,#8
 ldr	r0,target
+ldrb	r0,[r0]
 mov	r1,#0
 mov	r2,#0
 .short	0xF800
@@ -95,11 +98,19 @@ strh	r1,[r0]
 end:
 pop	{r0-r7}
 cmp	r0,#0
-beq	return2
-return1:
+beq	end2
+
+end1:
+mov	r0,#0
 ldr	r3,=#0x801C4F9
 bx	r3
-return2:
+
+end2:
+@item history code must handle this, if enabled
+ldr	r0,history
+cmp	r0,#0
+bne	end1
+
 ldr	r3,=#0x801C535
 bx	r3
 .align
@@ -107,5 +118,6 @@ bx	r3
 drawNumber:
 @POIN drawNumber
 @WORD timer
+@WORD history
 @WORD target
 @POIN counter

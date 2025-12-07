@@ -1,3 +1,10 @@
+#ifndef requirementPrizeItem
+	#define requirementPrizeItem "0x52"
+#endif
+#ifndef requirementPrizeSub
+	#define requirementPrizeSub "0x1D"
+#endif
+
 //when item 0x1B is collected, save the trap type for it to trigger when link regains control
 PUSH; ORG $A744A; SHORT 0; jumpToHack(trapSet); POP
 ALIGN 4
@@ -5,12 +12,21 @@ trapSet:
 #incbin "asm/trapSet.dmp"
 
 //when links regains control, trigger the trap
+//also handles requirement prize item
 PUSH; ORG $804DA; SHORT 0; jumpToHack(trapTrigger); POP
 ALIGN 4
 trapTrigger:
 #incbin "asm/trapTrigger.dmp"
 POIN trapTable
 POIN getRNG
+#ifdef requirementPrize
+	WORD 1
+#else
+	WORD 0
+#endif
+POIN requirementTable
+WORD requirementPrizeItem
+WORD requirementPrizeSub
 
 ALIGN 4
 trapTable: //pointers to routines for each trap, based on subID of the 0x1B item
@@ -103,32 +119,74 @@ POIN trapIconTable
 
 ALIGN 4
 trapIconTable: //BYTE itemID
-BYTE 0x01 //sword
+BYTE 0x03 //white sword (2)
+BYTE 0x04 //white sword (3)
+BYTE 0x06 //four sword
 BYTE 0x08 //remote bombs
 BYTE 0x09 //bow
+BYTE 0x0A //light arrow
 BYTE 0x0B //boomerang
+BYTE 0x0C //magic boomerang
 BYTE 0x0D //shield
+BYTE 0x0E //mirror shield
 BYTE 0x0F //lantern
 BYTE 0x11 //jar
 BYTE 0x12 //cane
 BYTE 0x13 //mitts
 BYTE 0x14 //cape
 BYTE 0x15 //boots
-BYTE 0x1E //bottle
 BYTE 0x17 //ocarina
-BYTE 0x3B //blue book
-BYTE 0x39 //red book
-BYTE 0x3A //green book
+BYTE 0x1E //bottle
+BYTE 0x36 //dog food
+#ifndef openWorld
+	BYTE 0x37 //silver key
+#endif
 BYTE 0x38 //mushroom
-BYTE 0x3C //gold key
-BYTE 0x37 //silver key
+#ifdef bookTraps
+	BYTE 0x39 //red book
+	BYTE 0x3A //green book
+	BYTE 0x3B //blue book
+#endif
+#ifndef openWorld
+	BYTE 0x3C //gold key
+#endif
+BYTE 0x3D //tingle trophy
+#ifndef openWorld
+	BYTE 0x3E //carlov medal
+#endif
+#ifdef elementTraps
+	BYTE 0x40 //earth element
+	BYTE 0x40 //earth element
+	BYTE 0x40 //earth element
+	BYTE 0x41 //fire element
+	BYTE 0x41 //fire element
+	BYTE 0x41 //fire element
+	BYTE 0x42 //water element
+	BYTE 0x42 //water element
+	BYTE 0x42 //water element
+	BYTE 0x43 //wind element
+	BYTE 0x43 //wind element
+	BYTE 0x43 //wind element
+#endif
 BYTE 0x44 //grip ring
 BYTE 0x45 //power bracelet
 BYTE 0x46 //flippers
+#ifdef bigKeysanityTraps
+	BYTE 0x52 //big key
+#endif
+#ifdef smallKeysanityTraps
+	BYTE 0x53 //small key
+	BYTE 0x53 //small key
+	BYTE 0x53 //small key
+#endif
+#ifdef heartTraps
+	BYTE 0x62 //heart container
+	BYTE 0x63 //piece of heart
+#endif
 BYTE 0x64 //wallet
 BYTE 0x65 //bomb bag
 BYTE 0x66 //quiver
-BYTE 0x3D //tingle trophy
-BYTE 0x3E //carlov medal
-BYTE 0x62 //heart container
-BYTE 0x00 //terminator
+#ifdef requirementFigurinesAmount
+	BYTE 0x67 //figurine
+#endif
+BYTE 0 //terminator

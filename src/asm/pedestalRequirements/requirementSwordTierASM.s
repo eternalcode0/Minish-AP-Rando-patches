@@ -5,9 +5,9 @@ ldrb	r0,[r0]
 cmp	r0,#0
 beq	true
 cmp	r0,#5
-blo	np2
+blo	notFourSword
 mov	r0,#6
-np2:
+notFourSword:
 ldr	r3,=#0x807C4A8
 mov	lr,r3
 .short	0xF800

@@ -1,3 +1,70 @@
+#ifndef swiftbladeIDojoItem
+	#define swiftbladeIDojoItem "0x4D"
+#endif
+#ifndef swiftbladeIDojoSub
+	#define swiftbladeIDojoSub "0x00"
+#endif
+#ifndef swiftblade1DojoItem
+	#define swiftblade1DojoItem "0x48"
+#endif
+#ifndef swiftblade1DojoSub
+	#define swiftblade1DojoSub "0x00"
+#endif
+#ifndef swiftblade2DojoItem
+	#define swiftblade2DojoItem "0x4B"
+#endif
+#ifndef swiftblade2DojoSub
+	#define swiftblade2DojoSub "0x00"
+#endif
+#ifndef swiftblade3DojoItem
+	#define swiftblade3DojoItem "0x4A"
+#endif
+#ifndef swiftblade3DojoSub
+	#define swiftblade3DojoSub "0x00"
+#endif
+#ifndef swiftblade4DojoItem
+	#define swiftblade4DojoItem "0x4E"
+#endif
+#ifndef swiftblade4DojoSub
+	#define swiftblade4DojoSub "0x00"
+#endif
+#ifndef graybladeDojoItem
+	#define graybladeDojoItem "0x49"
+#endif
+#ifndef graybladeDojoSub
+	#define graybladeDojoSub "0x00"
+#endif
+#ifndef wavebladeDojoItem
+	#define wavebladeDojoItem "0x4F"
+#endif
+#ifndef wavebladeDojoSub
+	#define wavebladeDojoSub "0x00"
+#endif
+#ifndef grimbladeDojoItem
+	#define grimbladeDojoItem "0x4C"
+#endif
+#ifndef grimbladeDojoSub
+	#define grimbladeDojoSub "0x00"
+#endif
+#ifndef scarbladeDojoItem
+	#define scarbladeDojoItem "0x73"
+#endif
+#ifndef scarbladeDojoSub
+	#define scarbladeDojoSub "0x00"
+#endif
+#ifndef splitbladeDojoItem
+	#define splitbladeDojoItem "0x74"
+#endif
+#ifndef splitbladeDojoSub
+	#define splitbladeDojoSub "0x00"
+#endif
+#ifndef greatbladeDojoItem
+	#define greatbladeDojoItem "0x75"
+#endif
+#ifndef greatbladeDojoSub
+	#define greatbladeDojoSub "0x00"
+#endif
+
 PUSH; ORG $68698; jumpToHack(dojosLoad); POP
 ALIGN 4
 dojosLoad:
@@ -41,11 +108,8 @@ WORD 22; POIN itemNorthFieldDojo //0x75 Increased Great Spin Attack Rotation Tim
 //long great spin bro does not ask for great spin
 PUSH; ORG $68818; SHORT 0x2000; POP
 
-//swiftblade I sets the spin attack as usable for the tutorial
-PUSH; ORG $68908; jumpToHack(dojosTutorialSpin); POP
-ALIGN 4
-dojosTutorialSpin:
-#incbin "asm/dojosTutorialSpin.dmp"
+//swiftblade checks for one out of 4 different swords
+PUSH; ORG $687B6; SHORT 0xE034; POP
 
 //swiftblade I now checks for 7 scrolls total, instead of 7 specific scrolls
 PUSH; ORG $687D8; jumpToHack(dojosScrollCount); POP
@@ -53,9 +117,9 @@ ALIGN 4
 dojosScrollCount:
 #incbin "asm/dojosScrollCount.dmp"
 
-ALIGN 4
-dojoProgessive:
-#incbin "asm/dojoProgessive.dmp"
-
-//dojo tutorial is automatically completed
-PUSH; ORG $6894A; SHORT 0; POP
+//remove dojo tutorials
+PUSH
+ORG $1627C
+SHORT 0x0803 //jump event command
+SHORT $16366-$1627C-2 //value for the jump, command adds this value + 1, multiplied by two, to the event cursor
+POP

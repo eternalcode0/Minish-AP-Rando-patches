@@ -1,17 +1,9 @@
-//limit split ammount in certain areas
-PUSH; ORG $73EC8; jumpToHack(splitHack); POP
-ALIGN 4
-splitHack:
+//limit split ammount
+PUSH
+ORG $73E8E
+SHORT 0
 #incbin "asm/splitHack.dmp"
-POIN splitLimits
-splitLimits:
-//areaID roomID cloneAmmount (0xFF as room for all rooms of that area)
-BYTE 0x58 0xFF 1 //all of fortress
-BYTE 0x60 0xFF 1 //all of droplets
-BYTE 0x09 0x00 2 //graveyard
-BYTE 0x68 0x04 2 //crypt
-BYTE 0x2E 0x02 1 //big book
-BYTE 0 0 0
+POP
 
 PUSH //new items
 ORG $F2528; BYTE 0x06 0x0F 0x00; ORG currentoffset+2; BYTE 0x04; ORG currentoffset+8; SHORT 0xC8 //new item in smith's room, write item to $F252B
@@ -137,6 +129,7 @@ WORD 40 //pie price
 WORD 60 //cake price
 
 //set flag when ocarina is collected, custom flag 1
+//also remove activation of the lake hylia wind crest on item collection
 PUSH; ORG $9C9F4; jumpToHack(ocarinaFlag1); POP
 ALIGN 4
 ocarinaFlag1:
@@ -152,7 +145,18 @@ ALIGN 4
 ocarinaFlag3:
 #incbin "asm/ocarinaFlag3.dmp"
 
-//give the jabber nut item spot its own flag, custm flag 0
+#ifdef disableLakeCrest
+	//remove activation of the lake hylia wind crest when using the ocarina
+	PUSH; ORG $9CCFE; SHORT 0x46C0; POP
+
+	//ocarina only calls bird if at least one wind crest is activated
+	PUSH; ORG $9CF90; jumpToHack(ocarinaCheck); POP
+	ALIGN 4
+	ocarinaCheck:
+	#incbin "asm/ocarinaCheck.dmp"
+#endif
+
+//give the jabber nut item spot its own flag, custom flag 0
 PUSH; ORG $4C15C; jumpToHack(jabberNut1); POP
 ALIGN 4
 jabberNut1:
@@ -176,14 +180,49 @@ PUSH; ORG $EEA82; SHORT 0; POP
 PUSH; ORG $EEA92; SHORT 0; POP
 
 //biggoron changes
-PUSH; ORG $9402; SHORT 21; POP //biggoron doesn't ask for a major feat (checks if you have ezlo instead)
+PUSH; ORG $9400; SHORT 0x0400; SHORT 0x0400 //biggoron does not check for game completion
+#ifdef enableBiggoronItem
+	SHORT 0x0803 //always jump (go to shield checks)
+#else
+	SHORT 0x0400 //never jump (go to major feat text)
+#endif
+POP
+PUSH; ORG $9438; SHORT 0x0024; POP //use local flag 0xAC to determine whether the item was already received, if so, jump to thanks text
+#ifdef biggoronRequiresMirrorShield
+	PUSH; ORG $943E; SHORT 0x0400 0x0400; POP //normal shield does not matter
+#endif
 PUSH; ORG $6D082; SHORT 0x2000; POP //no timer for mirror shield
+PUSH; ORG $9458; SHORT 0x0803; POP //give item even when we have mirror shield
+PUSH; ORG $94D4; SHORT 0x0016; POP //give item instantly without having to talk to biggoron again
+PUSH; ORG $951A; SHORT 0x0400 0x0400; POP //no clearing of local flag 0xAC
+#ifndef biggoronItem
+	#define biggoronItem 0x0E
+#endif
+#ifndef biggoronSub
+	#define biggoronSub 0x00
+#endif
+//write the item
+PUSH
+ORG $6D0A2
+BYTE biggoronItem
+ORG $6D0A4
+BYTE biggoronSub
+POP
+//trickery to make the mirror shield cutscene draw the correct item (also needs birdFix2)
+PUSH
+ORG $95B20
+SHORT 0xB570 // push {r4-r6,r14}
+SHORT 0x2101 // mov r1,#0x1
+SHORT 0x7601 // strb r1,[r0,#0x18]
+BYTE biggoronItem 0x21 // mov r1,#item
+SHORT 0xE001 // b #0x08095B2E
+POP
 
 //all fusions are available in all town states
 #ifdef noFusions
-    PUSH; ORG $1E9C2; SHORT 0xE048; POP
+	PUSH; ORG $1E9C2; SHORT 0xE048; POP
 #else
-    PUSH; ORG $1E9C2; SHORT 0x46C0; POP
+	PUSH; ORG $1E9C2; SHORT 0x46C0; POP
 #endif
 
 //minish village is always in the post-temple state, except for festari which asks for the nut
@@ -243,6 +282,8 @@ PUSH; ORG $91924; jumpToHack(openCurtain); POP
 ALIGN 4
 openCurtain:
 #incbin "asm/openCurtain.dmp"
+//and it does not open even if you have the earth element
+PUSH; ORG $C826; BYTE 0; POP
 
 //make the bell heart piece randomizable
 PUSH; ORG $5D600; SHORT 0x2000; POP
@@ -251,8 +292,14 @@ ALIGN 4
 bellHeart:
 #incbin "asm/bellHeart.dmp"
 
+#ifndef carlovSpotItem
+	#define carlovSpotItem 0x3E
+#endif
+#ifndef carlovSpotSub
+	#define carlovSpotSub 0x00
+#endif
 #ifndef carlovFigurineRequirement
-    #define carlovFigurineRequirement 0x00
+	#define carlovFigurineRequirement 0x00
 #endif
 //carlov gives out medal when you talk to him
 PUSH; ORG $87EF4; jumpToHack(carlov); POP
@@ -292,6 +339,7 @@ PUSH; ORG $4D08C; jumpToHack(windFix); POP
 ALIGN 4
 windFix:
 #incbin "asm/windFix.dmp"
+
 //fix yet another element spots issue
 PUSH; ORG $9FAB8; jumpToHack(elementsFixAgain); POP
 ALIGN 4
@@ -310,16 +358,16 @@ ALIGN 4
 holeKeys:
 #incbin "asm/holeKeys.dmp"
 #ifndef fowLeftItem
-    #define fowLeftItem "0x53"
+	#define fowLeftItem "0x53"
 #endif
 #ifndef fowLeftSub
-    #define fowLeftSub "0x00"
+	#define fowLeftSub "0x00"
 #endif
 #ifndef fowRightItem
-    #define fowRightItem "0x53"
+	#define fowRightItem "0x53"
 #endif
 #ifndef fowRightSub
-    #define fowRightSub "0x00"
+	#define fowRightSub "0x00"
 #endif
 PUSH
 ORG $E2B0B; BYTE fowLeftItem  fowLeftSub
@@ -364,6 +412,23 @@ tingleCheck:
 
 //remove percy shell check
 PUSH; ORG $6B03C; SHORT 0x2000; POP
+
+//peril beam always active under ohko, or when out of time in timed ohko
+#ifdef ohkoOption
+	PUSH; ORG $7AA80; jumpToHack(ohkoPeril); POP
+	ALIGN 4
+	ohkoPeril:
+	#incbin "asm/ohkoPeril.dmp"
+	WORD 0
+#else
+	#ifdef timedohkoOption
+		PUSH; ORG $7AA80; jumpToHack(ohkoPeril); POP
+		ALIGN 4
+		ohkoPeril:
+		#incbin "asm/ohkoPeril.dmp"
+		POIN timedohkoCheckTime
+	#endif
+#endif
 
 #include "dojos.event"
 #include "shop.event"
