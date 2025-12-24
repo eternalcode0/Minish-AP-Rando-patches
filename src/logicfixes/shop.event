@@ -298,6 +298,8 @@ shopMirrorShield: //mirror shield, spawns if you have had a mirror shield
 #endif
 shopTerminator
 
+PUSH
+ORG itemStockwellBombItem-3
 ALIGN 4
 shopBuy4: //fourth randomized item (bomb bag)
 #ifdef enableBombBagShopItem
@@ -308,6 +310,7 @@ shopBuy4: //fourth randomized item (bomb bag)
 	#endif
 #endif
 shopTerminator
+POP
 
 ALIGN 4
 goronMerchantData:

@@ -25,8 +25,7 @@ POIN getRNG
 	WORD 0
 #endif
 POIN requirementTable
-WORD requirementPrizeItem
-WORD requirementPrizeSub
+POIN itemReqReward
 
 ALIGN 4
 trapTable: //pointers to routines for each trap, based on subID of the 0x1B item

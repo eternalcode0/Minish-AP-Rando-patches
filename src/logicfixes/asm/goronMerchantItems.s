@@ -79,5 +79,6 @@ bx	r3
 .align
 .ltorg
 customSets:
+@POIN goronMerchantCustomSets
 @POIN goronMerchantData
 @WORD disableKinstoneDrops

@@ -89,14 +89,14 @@ ORG goldenDropTable
 ALIGN 4
 // BYTE area room itemid subid; SHORT flag
 goldenDropsList:
-BYTE 0x05 0x05 golden1Item golden1Sub; SHORT 0x31|0x4000 //Golden Octorok - Wind Ruins				0xFF0112
-BYTE 0x06 0x03 golden2Item golden2Sub; SHORT 0x32|0x4000 //Golden Tektite - Mt. Crenel(Lower Area)		0xFF0118
-BYTE 0x04 0x00 golden3Item golden3Sub; SHORT 0x33|0x4000 //Golden Rope - Castor Wilds				0xFF011E
-BYTE 0x03 0x04 golden4Item golden4Sub; SHORT 0x34|0x4000 //Golden Rope - Eastern Hills				0xFF0124
-BYTE 0x07 0x00 golden5Item golden5Sub; SHORT 0x35|0x4000 //Golden Rope - Hyrule Castle Garden			0xFF012A
-BYTE 0x0A 0x00 golden6Item golden6Sub; SHORT 0x36|0x4000 //Golden Tektite - Veil Falls				0xFF0130
-BYTE 0x06 0x02 golden7Item golden7Sub; SHORT 0x37|0x4000 //Golden Tektite - Mt. Crenel(Middle Area)		0xFF0136
-BYTE 0x00 0x00 golden8Item golden8Sub; SHORT 0x38|0x4000 //Golden Octorok - Minish Woods, Witch's Hut area	0xFF013C
-BYTE 0x03 0x09 golden9Item golden9Sub; SHORT 0x39|0x4000 //Golden Octorok - Western Wood			0xFF0142
+BYTE 0x05 0x05 golden1Item golden1Sub; SHORT 0x31|0x4000 //Golden Octorok - Wind Ruins				0xFF0122
+BYTE 0x06 0x03 golden2Item golden2Sub; SHORT 0x32|0x4000 //Golden Tektite - Mt. Crenel(Lower Area)		0xFF0128
+BYTE 0x04 0x00 golden3Item golden3Sub; SHORT 0x33|0x4000 //Golden Rope - Castor Wilds				0xFF012E
+BYTE 0x03 0x04 golden4Item golden4Sub; SHORT 0x34|0x4000 //Golden Rope - Eastern Hills				0xFF0134
+BYTE 0x07 0x00 golden5Item golden5Sub; SHORT 0x35|0x4000 //Golden Rope - Hyrule Castle Garden			0xFF013A
+BYTE 0x0A 0x00 golden6Item golden6Sub; SHORT 0x36|0x4000 //Golden Tektite - Veil Falls				0xFF0140
+BYTE 0x06 0x02 golden7Item golden7Sub; SHORT 0x37|0x4000 //Golden Tektite - Mt. Crenel(Middle Area)		0xFF0146
+BYTE 0x00 0x00 golden8Item golden8Sub; SHORT 0x38|0x4000 //Golden Octorok - Minish Woods, Witch's Hut area	0xFF014C
+BYTE 0x03 0x09 golden9Item golden9Sub; SHORT 0x39|0x4000 //Golden Octorok - Western Wood			0xFF0152
 SHORT 0 0 0 //terminator
 POP

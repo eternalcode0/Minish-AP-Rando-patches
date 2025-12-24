@@ -217,13 +217,20 @@ figurine:
 push	{r4-r7}
 @check if the we already had this figurine
 ldr	r0,=#0x2002B0E
-mov	r1,r7
+@loop to find new figurine
+mov	r1, #0
+figurineLoop:
+cmp	r1, #0x88
+bcs	notnewfigurine	@over figurine count
 ldr	r3,=#0x801D5E0	@vanilla flag check routine
 mov	lr,r3
 .short	0xF800
 cmp	r0,#0
-bne	notnewfigurine
+beq	foundFigurine
+add	r1,#1
+b	figurineLoop
 
+foundFigurine:
 @increase figurine total
 ldr	r0,=#0x2002AF0
 ldrb	r1,[r0]

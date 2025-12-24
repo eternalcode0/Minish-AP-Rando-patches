@@ -2,7 +2,6 @@
 .equ requirementPrize, getRNG+4
 .equ requirementTable, requirementPrize+4
 .equ requirementPrizeItem, requirementTable+4
-.equ requirementPrizeSub, requirementPrizeItem+4
 .thumb
 ldr	r3,[r7,#0x30]
 mov	r0,#0x32
@@ -73,7 +72,10 @@ strb	r1,[r0]
 
 @spawn the item
 ldr	r0,requirementPrizeItem
-ldr	r1,requirementPrizeSub
+ldrb	r1,[r0, #1]
+ldrb	r0,[r0]
+cmp	r0,#0
+beq	end
 mov	r2,#0
 ldr	r3,=#0x80A73F8 @CreateItemEntity
 mov	lr,r3

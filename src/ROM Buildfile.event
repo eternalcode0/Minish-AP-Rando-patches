@@ -70,7 +70,7 @@ String("mgba.io"); BYTE 0x2F; String("downloads.html"); BYTE 0
 
 // Always place the sword and shield in the smith's room
 PUSH
-ORG $F252B; BYTE 0x05 0x0
+ORG $F252B; BYTE 0x01 0x00
 ORG $F253B; BYTE 0x0D 0x00
 POP
 

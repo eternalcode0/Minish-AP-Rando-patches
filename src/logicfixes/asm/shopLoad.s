@@ -93,6 +93,9 @@ mov	lr,r3
 cmp	r0,#0
 bne	no4
 ldr	r0,shopBuy4
+ldrb	r1,[r0]
+cmp	r1,#0
+beq	no4
 ldr	r3,=#0x804AAF8
 mov	lr,r3
 .short	0xF800
