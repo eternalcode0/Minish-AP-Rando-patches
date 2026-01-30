@@ -1,6 +1,4 @@
 .equ	returnTrue, returnFalse+4
-.equ	bootsOnL, returnTrue+4
-.equ	ocarinaOnSelect, bootsOnL+4
 .thumb
 push	{lr}
 ldr	r2,=#0x2002AE8
@@ -13,7 +11,10 @@ cmp	r3,#0x15
 bne	noBoots
 
 @check if boots on L
-ldr	r5,bootsOnL
+ldr	r5,=#0x8FE0005
+ldr	r5,[r5]
+mov	r6,#0x01
+and	r5,r6
 cmp	r5,#0
 beq	noBoots
 
@@ -41,7 +42,10 @@ bne	shortcut
 
 @check if ocarina on Select
 noBoots:
-ldr	r5,ocarinaOnSelect
+ldr	r5,=#0x8FE0005
+ldr	r5,[r5]
+mov	r6,#0x02
+and	r5,r6
 cmp	r5,#0
 beq	end
 
@@ -93,5 +97,3 @@ pop	{r3}
 returnFalse:
 @POIN returnFalse
 @POIN returnTrue
-@WORD bootsOnL
-@WORD ocarinaOnSelect

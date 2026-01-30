@@ -98,23 +98,23 @@
 #define customRNG 0x7C20FA23
 #define versionNumber 0x010000FF
 #define versionNumbers 0x010000FF
-#define TUNIC_COLORED
-#define TUNIC_COLOR_DARKEST 0x15E2
-#define TUNIC_COLOR_DARK 0x1688
-#define TUNIC_COLOR_MAIN 0x07E2
-#define TUNIC_COLOR_LIGHT 0x53F7
-#define heartscolor
-#define heartFillR (0x195F & 0x1F)
-#define heartFillG ((0x195F >> 5) & 0x1F)
-#define heartFillB ((0x195F >> 10) & 0x1F)
-#define heartEdgeR (0x7FFF & 0x1F)
-#define heartEdgeG ((0x7FFF >> 5) & 0x1F)
-#define heartEdgeB ((0x7FFF >> 10) & 0x1F)
+//#define TUNIC_COLORED
+//#define TUNIC_COLOR_DARKEST 0x15E2
+//#define TUNIC_COLOR_DARK 0x1688
+//#define TUNIC_COLOR_MAIN 0x07E2
+//#define TUNIC_COLOR_LIGHT 0x53F7
+//#define heartscolor
+//#define heartFillR (0x195F & 0x1F)
+//#define heartFillG ((0x195F >> 5) & 0x1F)
+//#define heartFillB ((0x195F >> 10) & 0x1F)
+//#define heartEdgeR (0x7FFF & 0x1F)
+//#define heartEdgeG ((0x7FFF >> 5) & 0x1F)
+//#define heartEdgeB ((0x7FFF >> 10) & 0x1F)
 #define lowHealthBeep 90
-#define barcolor
-#define splitFirst 0x0FE9
-#define splitThird 0x0E66
-#define splitFourth 0x0D46
+//#define barcolor
+//#define splitFirst 0x0FE9
+//#define splitThird 0x0E66
+//#define splitFourth 0x0D46
 #define guaranteedBarlov
 #define instantText
 //#define historyOption 0x180
@@ -174,8 +174,6 @@
 #define mC82 0x00
 #define mC85 0x00
 #define mC87 0x00
-#define bootsOnL
-#define ocarinaOnSelect
 #define removeFickleness
 #define instantFusionReload
 #define alwaysSkipFusionCutscene 1
@@ -199,6 +197,7 @@
 #define seededSharedFusions
 #define counterOption
 #define enableBombBagShopItem
+//#define enableBiggoronItem
 //#define goronMerchantCustomSets 0
 //#define seedHashed 0xB22CA58F
 //#define settingHash 0x958678B6
@@ -272,3 +271,5 @@
 // 0x248-0x367: Red Fusions
 // 0x368
 #define fusionTable		$FF0200
+
+#define multiplierTables	$FF0530

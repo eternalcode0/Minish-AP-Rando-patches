@@ -74,12 +74,6 @@ ORG $F252B; BYTE 0x01 0x00
 ORG $F253B; BYTE 0x0D 0x00
 POP
 
-PUSH
-ALIGN 4
-spawnPoint:
-BYTE 0x22 /*area*/ 0x15 /*room*/ 4 /*facing direction*/ 0 /*transition type*/; SHORT 0x58 /*x*/ 0x38 /*y*/
-POP
-
 //unify golden kinstone fusions (obviously no need to change the royal piece)
 PUSH
 //tornado pieces first, all set to match with 0x65

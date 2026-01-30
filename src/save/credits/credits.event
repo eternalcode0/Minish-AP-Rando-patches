@@ -446,8 +446,8 @@ BYTE 0x0A
 BYTE 2 0x1B; String("github.com"); BYTE 0x0F 0x15; String("minishmaker"); BYTE 2 0 0
 
 credits6:
-BYTE 0x0A
-BYTE 0x0A
+BYTE 2 0x03; String("AP World"); BYTE 2 0 0x0A
+String("EternalCode         Myth197"); BYTE 0x0A
 BYTE 0x0A
 BYTE 2 0x01; String("Translators"); BYTE 2 0 0x0A
 String("Deoxis and Legrandgrand (French)"); BYTE 0x0A

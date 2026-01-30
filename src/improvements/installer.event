@@ -39,6 +39,31 @@
 	#define kinstoneMultiplierGreenP 1
 #endif
 
+#ifndef keyMultiplierUniversal
+	#define keyMultiplierUniversal 1
+#endif
+#ifndef keyMultiplierDWS
+	#define keyMultiplierDWS 1
+#endif
+#ifndef keyMultiplierCOF
+	#define keyMultiplierCOF 1
+#endif
+#ifndef keyMultiplierFOW
+	#define keyMultiplierFOW 1
+#endif
+#ifndef keyMultiplierTOD
+	#define keyMultiplierTOD 1
+#endif
+#ifndef keyMultiplierPOW
+	#define keyMultiplierPOW 1
+#endif
+#ifndef keyMultiplierDHC
+	#define keyMultiplierDHC 1
+#endif
+#ifndef keyMultiplierRC
+	#define keyMultiplierRC 1
+#endif
+
 //remove all ezlo stepping triggers
 PUSH; ORG $4AB14; jumpToHack(ezloPleaseStop); POP
 ALIGN 4
@@ -54,6 +79,10 @@ ezloPleaseStop:
 	PUSH; ORG $56726; SHORT 0x8801; POP
 #endif
 
+//remove the traditional way of setting bits in favor of CreateItemEntity (progressiveItems)
+PUSH; ORG $A3786; SHORT 0; POP
+
+//new fusion flags
 PUSH
 ORG fusionTable
 ALIGN 4
@@ -161,6 +190,13 @@ BYTE 0xF2 0x63; SHORT 0; WORD 0
 BYTE 0xF2 0x64; SHORT 0; WORD 0
 POP
 
+//add fusion handler to give new items
+PUSH; ORG $78bc8; jumpToHack(fusionGrantItem); POP
+ALIGN 4
+fusionGrantItem:
+#incbin "asm/fusionGrantItem.dmp"
+POIN fusionGrantTable
+
 //skip fusion cutscene if A, B or START are held (or always)
 #ifndef neverSkipFusionCutscene
 	PUSH; ORG $A35E4; jumpToHack(skipFusionCutscene); POP
@@ -174,10 +210,10 @@ POP
 //skip minish transformation cutscenes automatically
 PUSH; ORG $70DFA; SHORT 0; POP
 
-#ifdef ocarinaOnSelect
-	//can't talk to ezlo with Select
-	PUSH; ORG $5270A; SHORT 0x4280; POP
-#endif
+//#ifdef ocarinaOnSelect
+//	//can't talk to ezlo with Select
+//	PUSH; ORG $5270A; SHORT 0x4280; POP
+//#endif
 
 //pressing L uses pegasus boots, if owned
 //pressing Select uses the ocarina, if owned
@@ -188,32 +224,12 @@ pegasusShortcut1:
 POIN ($772AC+0x08)|1 //return offset if false
 POIN ($772AC+0x2C)|1 //return offset if true
 POIN $778C4 //something about buttons
-#ifdef bootsOnL
-	WORD 1
-#else
-	WORD 0
-#endif
-#ifdef ocarinaOnSelect
-	WORD 1
-#else
-	WORD 0
-#endif
 PUSH; ORG $77950; jumpToHack(pegasusShortcut2); POP
 ALIGN 4
 pegasusShortcut2:
 #incbin "asm/pegasusShortcut2.dmp"
 POIN ($77950+0x08)|1 //return offset if false
 POIN ($77950+0x26)|1 //return offset if true
-#ifdef bootsOnL
-	WORD 1
-#else
-	WORD 0
-#endif
-#ifdef ocarinaOnSelect
-	WORD 1
-#else
-	WORD 0
-#endif
 
 //no wait when visiting a new area
 PUSH; ORG $52D64; SHORT 0xE006; POP
@@ -521,6 +537,10 @@ ALIGN 4
 kinstoneBagMultiplier:
 #incbin "asm/kinstoneBagMultiplier.dmp"
 POIN kinstoneBagMultiplierTable
+
+PUSH
+ORG multiplierTables
+ALIGN 4
 kinstoneBagMultiplierTable:
 BYTE kinstoneMultiplierGoldCloud
 BYTE kinstoneMultiplierGoldCloud
@@ -539,6 +559,17 @@ BYTE kinstoneMultiplierBlueS
 BYTE kinstoneMultiplierGreenC
 BYTE kinstoneMultiplierGreenG
 BYTE kinstoneMultiplierGreenP
+ALIGN 4
+keyMultiplierTable:
+BYTE keyMultiplierUniversal
+BYTE keyMultiplierDWS
+BYTE keyMultiplierCOF
+BYTE keyMultiplierFOW
+BYTE keyMultiplierTOD
+BYTE keyMultiplierPOW
+BYTE keyMultiplierDHC
+BYTE keyMultiplierRC
+POP
 
 //elements at cloud tops are only drawn if looking at the top layer
 PUSH; ORG $A611C; jumpToHack(cloudsElements); POP
@@ -685,6 +716,10 @@ PUSH; ORG $83620; SHORT 0x2844; POP
 
 //faster textbox opening and closing
 PUSH; ORG $5615A; SHORT 0x2008; ORG $5619C; SHORT 0x2008; POP
+
+ALIGN 4
+spawnPoint:
+BYTE 0x22 /*area*/ 0x15 /*room*/ 4 /*facing direction*/ 0 /*transition type*/; SHORT 0x58 /*x*/ 0x38 /*y*/
 
 //warp home after sleep mode
 #ifdef allowHomewarp
@@ -833,8 +868,14 @@ ORG $4DD7E
 SHORT 0x46C0
 POP
 
+//fix mole cave walls affecting other mole caves and also make link not run forever
+PUSH; ORG $7FD48; jumpToHack(moleFix); POP
+ALIGN 4
+moleFix:
+#incbin "asm/moleFix.dmp"
+
 #include "glitchless.event"
 #include "dungeon.event"
 #include "fairy.event"
-#include "bigOctorok.event"
+//#include "bigOctorok.event"
 #include "barlov.event"

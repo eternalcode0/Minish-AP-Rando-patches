@@ -39,6 +39,20 @@ mov	r4,r0	@item ID
 mov	r7,r1	@sub ID
 ldr	r5,progressiveTable
 
+@check if this is a fusion item
+fusion:
+cmp	r0, #0xF2
+bne	notFusion
+ldr	r0, =#0x02002C81	@ Fusion address start
+ldr	r3, =#0x0801D5F4	@ WriteBit
+mov	lr, r3
+.short	0xF800
+exitWithoutCutscene:
+mov	r0, #0
+pop	{r4-r7}
+bx	lr
+
+notFusion:
 @check if this is a non-progressive shield
 cmp	r4,#0x0D
 beq	notSword

@@ -50,7 +50,7 @@ todLevers2:
 PUSH; ORG $EDC6C; WORD 0; ORG $EDAE0; BYTE 0x06 0x0F 0x08 0x00 0 0 0 0; SHORT 0x58 0x28 0xFFFF 0x6A; POP
 
 //add door to match boss door in tod
-PUSH; ORG $E3950; BYTE 0x06 0x0F 0x39 0x00 0 0 0 0; SHORT 0x108 0x28 0xFFFF 0x2C; POP
+//PUSH; ORG $E3950; BYTE 0x06 0x0F 0x39 0x00 0 0 0 0; SHORT 0x108 0x28 0xFFFF 0x2C; POP
 
 //add door to match keyhole door in tod
 PUSH; ORG $E4FBC; POIN todDoor; POP
@@ -117,10 +117,8 @@ gleerokFallFix:
 //fix animation for getting back a shield from a like like (fix from non-EU)
 PUSH; ORG $28206; SHORT 0xF07F 0xF903; POP
 
-#ifdef bootsMinish
-    //fix push value not resetting at the end of a jump off a ledge as minish
-    PUSH; ORG $70C74; jumpToHack(minishLedgeFix); POP
-    ALIGN 4
-    minishLedgeFix:
-    #incbin "asm/minishLedgeFix.dmp"
-#endif
+//fix push value not resetting at the end of a jump off a ledge as minish
+PUSH; ORG $70C74; jumpToHack(minishLedgeFix); POP
+ALIGN 4
+minishLedgeFix:
+#incbin "asm/minishLedgeFix.dmp"

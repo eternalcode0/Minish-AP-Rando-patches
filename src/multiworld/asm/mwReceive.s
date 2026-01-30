@@ -44,7 +44,7 @@ ldrb	r1, [r0]
 cmp	r1, r4
 beq	setInventoryMatch
 cmp	r1, #0xFF
-beq	checkFusion
+beq	createItem
 add	r0, #1
 b	setInventoryLoop
 
@@ -55,16 +55,16 @@ ldr	r3, =#0x0807C4C5	@ Call SetInventoryValue
 mov	lr, r3
 .short	0xF800
 
-checkFusion:
-mov	r1, #0xF2
-cmp	r1, r4
-bne	createItem
-ldr	r0, =#0x02002C81	@ Fusion address start
-ldr	r1, receivingItem
-ldrb	r1, [r1, #1]
-ldr	r3, =#0x0801D5F4	@ WriteBit
-mov	lr, r3
-.short	0xF800
+@ checkFusion:
+@ mov	r1, #0xF2
+@ cmp	r1, r4
+@ bne	createItem
+@ ldr	r0, =#0x02002C81	@ Fusion address start
+@ ldr	r1, receivingItem
+@ ldrb	r1, [r1, #1]
+@ ldr	r3, =#0x0801D5F4	@ WriteBit
+@ mov	lr, r3
+@ .short	0xF800
 
 @ Reload the memory address to be cleared for the next cycle
 clear:

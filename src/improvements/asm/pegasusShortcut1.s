@@ -1,7 +1,5 @@
 .equ	ReturnTrue, ReturnFalse+4
 .equ	buttonTable, ReturnTrue+4
-.equ	bootsOnL, buttonTable+4
-.equ	ocarinaOnSelect, bootsOnL+4
 .thumb
 push	{r4-r6,lr}
 mov	r4,r0
@@ -13,7 +11,10 @@ cmp	r6,#1
 bne	end
 
 @check if boots on L
-ldr	r5,bootsOnL
+ldr	r5,=#0x8FE0005
+ldr	r5,[r5]
+mov	r6,#0x01
+and	r5,r6
 cmp	r5,#0
 beq	noBoots
 
@@ -41,7 +42,10 @@ bne	boots
 
 @check if ocarina on Select
 noBoots:
-ldr	r5,ocarinaOnSelect
+ldr	r5,=#0x8FE0005
+ldr	r5,[r5]
+mov	r6,#0x02
+and	r5,r6
 cmp	r5,#0
 beq	end
 
@@ -98,5 +102,3 @@ ReturnFalse:
 @POIN ReturnFalse
 @POIN ReturnTrue
 @POIN buttonTable
-@WORD bootsOnL
-@WORD ocarinaOnSelect

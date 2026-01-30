@@ -6,12 +6,6 @@
 //ocarinaGlitchFix:
 //#incbin "asm/ocarinaGlitchFix.dmp"
 
-//fix mole cave walls affecting other mole caves and also make link not run forever
-PUSH; ORG $7FD48; jumpToHack(moleFix); POP
-ALIGN 4
-moleFix:
-#incbin "asm/moleFix.dmp"
-
 //prevent link from jumping diagonally out of holes
 PUSH; ORG $72558; jumpToHack(angleFix1); POP
 ALIGN 4

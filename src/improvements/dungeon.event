@@ -1,28 +1,3 @@
-#ifndef keyMultiplierUniversal
-	#define keyMultiplierUniversal 1
-#endif
-#ifndef keyMultiplierDWS
-	#define keyMultiplierDWS 1
-#endif
-#ifndef keyMultiplierCOF
-	#define keyMultiplierCOF 1
-#endif
-#ifndef keyMultiplierFOW
-	#define keyMultiplierFOW 1
-#endif
-#ifndef keyMultiplierTOD
-	#define keyMultiplierTOD 1
-#endif
-#ifndef keyMultiplierPOW
-	#define keyMultiplierPOW 1
-#endif
-#ifndef keyMultiplierDHC
-	#define keyMultiplierDHC 1
-#endif
-#ifndef keyMultiplierRC
-	#define keyMultiplierRC 1
-#endif
-
 //keys, maps, etc, can have the area they are for as a sub id and can be collected anywhere
 PUSH; ORG $5231E; SHORT 0; jumpToHack(keysSub); POP
 ALIGN 4
@@ -53,16 +28,6 @@ dungeonSub:
 #else
 	WORD 0
 #endif
-
-keyMultiplierTable:
-BYTE keyMultiplierUniversal
-BYTE keyMultiplierDWS
-BYTE keyMultiplierCOF
-BYTE keyMultiplierFOW
-BYTE keyMultiplierTOD
-BYTE keyMultiplierPOW
-BYTE keyMultiplierDHC
-BYTE keyMultiplierRC
 
 #ifdef universalMaps
 	PUSH

@@ -340,6 +340,19 @@ ALIGN 4
 windFix:
 #incbin "asm/windFix.dmp"
 
+//disable the DHC boss door when goal is pedestal
+PUSH; ORG $4AD38; jumpToHack(disableVaatiDoor); POP
+ALIGN 4
+disableVaatiDoor:
+#incbin "asm/disableVaatiDoor.dmp"
+POIN OptionsSpace
+POIN vaatiBlocker
+
+ALIGN 4
+vaatiBlocker:
+BYTE 6 0xF 0x4D 0x38 0 0; SHORT 0 0x0088 0x20 0 0
+WORD 0xFFFFFFFF 0xFFFFFFFF 0xFFFFFFFF 0xFFFFFFFF
+
 //fix yet another element spots issue
 PUSH; ORG $9FAB8; jumpToHack(elementsFixAgain); POP
 ALIGN 4

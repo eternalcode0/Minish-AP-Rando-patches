@@ -379,3 +379,6 @@ PUSH; ORG goron5Left; BYTE goron5LeftItem goron5LeftSub; POP
 PUSH; ORG goron5Middle; BYTE goron5MiddleItem goron5MiddleSub; POP
 PUSH; ORG goron5Right; BYTE goron5RightItem goron5RightSub; POP
 PUSH; ORG goronMerchantCustomSets; BYTE 5; POP
+
+// Options, bit flags for both Boots on L & Ocarina on Select
+PUSH; ORG OptionsSpace + 5; BYTE 3; POP

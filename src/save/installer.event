@@ -9,6 +9,12 @@ POP
 //remove save checksum and corrupted save deletion
 PUSH; ORG $7CA68; SHORT 0xE015; POP
 
+//respawn with max hp capped at 3 hearts
+PUSH; ORG $51D20; jumpToHack(deathHealthFix); POP
+ALIGN 4
+deathHealthFix:
+#incbin "asm/deathHealthFix.dmp"
+
 //handle saving, copying, erasing and creating the new save space
 PUSH; ORG $7CC30; jumpToHack(newSaveSpace); POP
 ALIGN 4

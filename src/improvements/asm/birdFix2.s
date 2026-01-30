@@ -68,6 +68,8 @@ push	{r2}
 ldrb	r3, [r4,#0x09]
 cmp	r3, #0x4D
 beq	notTrap
+cmp	r3, #0x4F	@ Top Door Sprite?
+beq	notTrap
 ldrb	r3, [r4, #0x0A]
 cmp	r3, #0x1B
 bne	notTrap
