@@ -4,6 +4,7 @@ PUSH
 	ORG $A4D54; POIN newItemMenuTable // sub_80a4b98
 POP
 #define itemMenuSquare(squareID,up,down,left,right,type,squarex,squarey) "PUSH; ORG (newItemMenuTable+(8*squareID)); BYTE up down left right type 0 squarex squarey; POP"
+
 ALIGN 4
 newItemMenuTable:
 #incbin "oldItemMenuTable.bin"
@@ -11,6 +12,7 @@ ORG currentOffset+8*0x20 //save space for up to 0x20 extra entries, although you
 itemMenuSquare(0x00,0x0C,0x04,0x12,0x01,1,0x42,0x33) //new sword
 itemMenuSquare(0x03,0x10,0x07,0x02,0x12,1,0xAE,0x33) //new boomerang
 itemMenuSquare(0x12,0x0C,0x04,0x03,0x00,1,0x24,0x33) //fire rod
+
 PUSH
 	// set fire rod to take slot 0x12 of the inventory
 	ORG $FCBA8; BYTE 0x12
@@ -26,6 +28,13 @@ PUSH
 	ORG $A4CF4; SHORT 0x2D11 0xD00A
 	ORG $A4D1A; SHORT 0x2D11 0xD00B
 POP
+
+// Don't put the cursor on the firerod slot if the player doesn't have it
+PUSH; ORG $A4B4C; jumpToHack(hideFirerodSlot); POP
+ALIGN 4
+hideFirerodSlot:
+#incbin "hideFirerodSlot.dmp"
+POIN newItemMenuTable
 
 //PUSH
 //	ORG $a4a4c

@@ -197,6 +197,7 @@
 #define seededSharedFusions
 #define counterOption
 #define enableBombBagShopItem
+#define enable_firerod
 //#define enableBiggoronItem
 //#define goronMerchantCustomSets 0
 //#define seedHashed 0xB22CA58F
