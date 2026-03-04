@@ -329,7 +329,7 @@ PUSH
 	BYTE 0x82
 	
 	//EEPROM strings, often checked by external programs
-	//the strings must be at a word aligned offset, and must have a length multipled of word size
+	//the strings must be at a word aligned offset, and must have a length multiple of word size
 	//here the original strings in the rom are replaced with equal length or smaller strings, padded with 0s
 	ORG $EF32CC
 	String("SRAM_F_V103"); BYTE 0
