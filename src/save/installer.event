@@ -310,3 +310,29 @@ WORD 0x203FE00+(06*2) //offset
 //WORD 0x203FE00+(07*2) //offset of times quickwarped
 
 #include "credits/credits.event"
+
+//improve save type detection on emulators, virtual console injectors, etc
+//none of this has an actual impact on the game itself
+PUSH
+	//game title and game code, to prevent automatic EEPROM save type selection for TMC
+	//this used to be more common, although I believe nowadays the string check method is used more often
+	//game title (GBAZELDA MC)
+	ORG $A0 // 3 words
+	WORD 0 0 0 // clear the previous game title
+	ORG $A0
+	String("MINISH RANDO");
+	//game code (BZMP)
+	ORG $AC // 1 word
+	String("TMCR");
+	//complement check (checksum), needs to be adjusted or the game won't boot on real hardware
+	ORG $BD
+	BYTE 0x82
+	
+	//EEPROM strings, often checked by external programs
+	//the strings must be at a word aligned offset, and must have a length multipled of word size
+	//here the original strings in the rom are replaced with equal length or smaller strings, padded with 0s
+	ORG $EF32CC
+	String("SRAM_F_V103"); BYTE 0
+	ORG $EF330C
+	String("SRAM_F_V103"); BYTE 0 0 0 0 0
+POP
