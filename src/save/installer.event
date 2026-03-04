@@ -332,7 +332,7 @@ PUSH
 	//the strings must be at a word aligned offset, and must have a length multiple of word size
 	//here the original strings in the rom are replaced with equal length or smaller strings, padded with 0s
 	ORG $EF32CC
-	String("SRAM_F_V103"); BYTE 0
+	String("SRAM_V103"); BYTE 0 0 0
 	ORG $EF330C
 	String("SRAM_F_V103"); BYTE 0 0 0 0 0
 POP
