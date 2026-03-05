@@ -322,11 +322,12 @@ PUSH
 	ORG $A0
 	String("MINISH RANDO");
 	//game code (BZMP)
+	//apparently game codes starting with S can be detected as SRAM games, at least for open_agb_firm
 	ORG $AC // 1 word
-	String("TMCR");
+	String("SZMR");
 	//complement check (checksum), needs to be adjusted or the game won't boot on real hardware
 	ORG $BD
-	BYTE 0x82
+	BYTE 0x98
 	
 	//EEPROM strings, often checked by external programs
 	//the strings must be at a word aligned offset, and must have a length multiple of word size
